@@ -1,0 +1,10 @@
+TiddlyRecon
+
+TiddlyWeb data explorer
+
+N.B.:
+This repository includes chrjs as a submodule:
+    http://github.com/tiddlyweb/chrjs
+After cloning, run the following commands:
+    $ git submodules init
+    $ git submodules update
