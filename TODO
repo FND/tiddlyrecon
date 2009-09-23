@@ -1,4 +1,6 @@
 * tiddler display swallows line breaks
+* integrate TiddlyWiki macro into backstage
+* wikify tiddler contents in TiddlyWiki macro
 * pagination for collections
 * edit functionality
 * visualize recipe cascade (strike out duplicate tiddlers)

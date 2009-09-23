@@ -5,7 +5,7 @@
 
 config.macros.TiddlyRecon = {
 	handler: function(place, macroName, params, wikifier, paramString, tiddler) {
-		var host = params[0]; // TODO: use config.options value as fallback?
+		var host = params[0] || null;
 		jQuery.TiddlyRecon(place, host);
 	}
 };
