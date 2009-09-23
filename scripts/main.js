@@ -109,7 +109,7 @@ var populateTiddlers = function(container, data, status, error) {
 };
 
 var loadTiddler = function(ev) {
-	var tiddler_node = $(this)
+	var tiddler_node = $(this);
 	var title = tiddler_node.text();
 	var bag = tiddler_node.attr("title");
 	notify("loading tiddler", title, bag);
@@ -137,8 +137,11 @@ var populateTiddler = function(container, data, status, error) {
 
 // utility functions -- TODO: move into separate module
 
-var notify = function(msg) {
-	console.log("notify:", msg); // TODO: proper notification
+var notify = function(msg) { // TODO: use jQuery.notify
+	// XXX: DEBUG
+	if(window.console && console.log) {
+		console.log("notify:", msg);
+	}
 };
 
 // utility method to create and then select elements
