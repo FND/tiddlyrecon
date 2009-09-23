@@ -13,8 +13,17 @@
 	</div>
 
 	<script src="scripts/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+	</script>
 	<script src="scripts/chrjs/main.js" type="text/javascript"></script>
 	<script src="scripts/main.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		// XXX: DEBUG
+		jQuery(function() {
+			jQuery.TiddlyRecon("#explorer", "http://tiddlyweb.peermore.com/wiki");
+		});
+	</script>
 </body>
 
 </html>

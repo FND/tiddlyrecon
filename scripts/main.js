@@ -1,15 +1,21 @@
-jQuery(function() {
+(function() {
 
 var $ = jQuery;
-var tw = tiddlyweb;
+var tw = tiddlyweb; // TODO: chrjs should provide an instance
 
-tw.host = "http://tiddlyweb.peermore.com/wiki"; // XXX: DEBUG
-var root = $("#explorer"); // XXX: rename?
+$.TiddlyRecon = function(root, host) {
+	tw.host = host;
+	$.TiddlyRecon.root = $(root);// XXX: singleton, bad
+	notify("loading status");
+	loadStatus();
+	notify("loading recipes");
+	tw.loadRecipes(populateRecipes);
+};
 
 // display status
 var loadStatus = function() {
 	var populateStatus = function(data, status, error) {
-		root.empty(); // XXX: doesn't belong here
+		$.TiddlyRecon.root.empty(); // XXX: doesn't belong here
 		$('<dl id="status" />').
 			append("<dt>user</dt>\n").
 			create("<dd />\n").text(data.username).end().
@@ -17,7 +23,7 @@ var loadStatus = function() {
 			create("<dd />\n").
 				create("<a />").attr("href", tw.host).text(tw.host).end().
 				end().
-			appendTo(root);
+			appendTo($.TiddlyRecon.root);
 	};
 	tw.loadData("/status", populateStatus);
 };
@@ -34,7 +40,7 @@ var populateRecipes = function(data, status, error) {
 				return $("<li />").text(item).click(loadRecipe)[0];
 			})).
 			end().
-		appendTo(root);
+		appendTo($.TiddlyRecon.root);
 };
 
 // display recipe
@@ -151,11 +157,4 @@ $.fn.create = function(html) { // TODO: rename? -- TODO: support animation
 	return this.append(html).children(":last");
 };
 
-// initialization
-
-notify("loading status");
-loadStatus();
-notify("loading recipes");
-tw.loadRecipes(populateRecipes);
-
-});
+})();
