@@ -11,4 +11,7 @@ if [ ! -d bld ]; then
 fi
 
 bld/init.sh
-cat scripts/chrjs/main.js scripts/main.js scripts/twmacro.js > TiddlyRecon.js
+echo "//}}}" | \
+	cat bld/resources/twmacro_template.js scripts/chrjs/main.js \
+		scripts/main.js scripts/twmacro.js - \
+	> TiddlyRecon.js
