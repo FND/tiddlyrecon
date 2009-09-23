@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# pull in external dependencies
+
 if [ ! -d bld ]; then
 	echo "ERROR: script must be executed from repository root"
 	exit 1

@@ -1,0 +1,6 @@
+* TiddlyWiki integration (as macro)
+* tiddler display swallows line breaks
+* pagination for collections
+* edit functionality
+* visualize recipe cascade (strike out duplicate tiddlers)
+* #tiddler lacks bottom border (visible if #tiddlers .listing is taller)
