@@ -1,5 +1,5 @@
 /***
-|''Name''|TiddlyRecon|
+|''Name''|TiddlyReconMacro|
 |''Description''|TiddlyWeb data explorer|
 |''Author''|FND|
 |''Source''|http://tiddlyweb.com|

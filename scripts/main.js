@@ -5,7 +5,7 @@ var tw = tiddlyweb; // TODO: chrjs should provide an instance
 
 $.TiddlyRecon = function(root, host) {
 	tw.host = host;
-	$.TiddlyRecon.root = $(root);// XXX: singleton, bad
+	$.TiddlyRecon.root = $(root).empty(); // XXX: singleton, bad
 	notify("loading status");
 	loadStatus();
 	notify("loading recipes");
@@ -15,7 +15,6 @@ $.TiddlyRecon = function(root, host) {
 // display status
 var loadStatus = function() {
 	var populateStatus = function(data, status, error) {
-		$.TiddlyRecon.root.empty(); // XXX: doesn't belong here
 		$('<dl id="status" />').
 			append("<dt>user</dt>\n").
 			create("<dd />\n").text(data.username).end().
@@ -79,9 +78,6 @@ var populateBags = function(container, data, status, error) {
 
 // display bag
 var loadBag = function(ev) {
-
-	// =============
-
 	var bag_node = $(this);
 	var bag_name = bag_node.text(); // TODO: special handling for "(all)";
 	notify("loading bag", bag_name);
@@ -153,7 +149,7 @@ var notify = function(msg) { // TODO: use jQuery.notify
 // utility method to create and then select elements
 // in combination with jQuery's end method, this is generally useful for
 // dynamically generating nested elements within a chain of operations
-$.fn.create = function(html) { // TODO: rename? -- TODO: support animation
+$.fn.create = function(html) {
 	return this.append(html).children(":last");
 };
 
