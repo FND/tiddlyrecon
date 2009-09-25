@@ -1,7 +1,10 @@
 * avoid IDs
+* use A elements for collection items
+** would also fix cross-browser :hover issues
 * integrate jQuery.notify
 * auto-discovery of host and server_prefix (via /status?)
 * special handling for (none) and (all) in recipes and bags, respectively
+* UI for specifying host (in status bar)
 * tiddler display swallows line breaks
 * pagination for collections
 * edit functionality

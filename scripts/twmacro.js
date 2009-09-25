@@ -1,4 +1,4 @@
-// TiddlyWiki macro wrapper
+// TiddlyWiki macro wrapper and backstage integration
 //
 // TODO:
 // * include styles
