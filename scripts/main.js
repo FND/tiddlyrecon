@@ -45,6 +45,7 @@ var populateRecipes = function(data, status, error) {
 // display recipe
 var loadRecipe = function(ev) {
 	var recipe_node = $(this);
+	setActive(recipe_node);
 	var recipe_name = recipe_node.text(); // TODO: special handling for "(none)";
 	notify("loading recipe", recipe_name);
 
@@ -79,6 +80,7 @@ var populateBags = function(container, data, status, error) {
 // display bag
 var loadBag = function(ev) {
 	var bag_node = $(this);
+	setActive(bag_node);
 	var bag_name = bag_node.text(); // TODO: special handling for "(all)";
 	notify("loading bag", bag_name);
 
@@ -112,6 +114,7 @@ var populateTiddlers = function(container, data, status, error) {
 
 var loadTiddler = function(ev) {
 	var tiddler_node = $(this);
+	setActive(tiddler_node);
 	var title = tiddler_node.text();
 	var bag = tiddler_node.attr("title");
 	notify("loading tiddler", title, bag);
@@ -135,6 +138,11 @@ var populateTiddler = function(container, data, status, error) {
 	notify("populating tiddler");
 
 	$('<div class="content" />').text(data.text).appendTo(container); // XXX: request wikified text!?
+};
+
+var setActive = function(node) {
+	node.siblings().removeClass("active");
+	node.addClass("active");
 };
 
 // utility functions -- TODO: move into separate module

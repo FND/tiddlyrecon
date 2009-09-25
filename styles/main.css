@@ -81,23 +81,29 @@ body {
 	background-color: #FFF;
 }
 
-/* XXX: :hover not cross-browser compatible -- TODO: should use A elements anyway */
+.active {
+	font-style: italic;
+}
 
-.listing li:hover {
+.listing li:hover,
+.listing .active {
 	width: 6em;
 	margin-right: -1em; /* XXX: should be 6em - 10px!? */
 	cursor: pointer;
 }
 
-#recipes li:hover {
+#recipes li:hover,
+#recipes .active {
 	background-color: #B7CAEB;
 }
 
-#bags li:hover {
+#bags li:hover,
+#bags .active {
 	background-color: #EEC6E6;
 }
 
-#tiddlers li:hover {
+#tiddlers li:hover,
+#tiddlers .active {
 	background-color: #FFF; /* TODO */
 }
 
