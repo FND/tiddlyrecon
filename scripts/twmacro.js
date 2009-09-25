@@ -9,3 +9,10 @@ config.macros.TiddlyRecon = {
 		jQuery.TiddlyRecon(place, host);
 	}
 };
+
+config.tasks.server = {
+	text: "server",
+	tooltip: "TiddlyWeb",
+	content: "<<TiddlyRecon>>"
+};
+config.backstageTasks.push("server");

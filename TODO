@@ -1,7 +1,14 @@
+* avoid IDs
+* integrate jQuery.notify
+* auto-discovery of host and server_prefix (via /status?)
+* special handling for (none) and (all) in recipes and bags, respectively
 * tiddler display swallows line breaks
-* integrate TiddlyWiki macro into backstage
-* wikify tiddler contents in TiddlyWiki macro
 * pagination for collections
 * edit functionality
 * visualize recipe cascade (strike out duplicate tiddlers)
 * #tiddler lacks bottom border (visible if #tiddlers .listing is taller)
+
+* status is not on top
+* integrate TiddlyWiki macro into backstage
+* wikify tiddler contents in TiddlyWiki macro
+* include styles
