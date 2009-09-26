@@ -1,7 +1,6 @@
-// TiddlyWiki macro wrapper and backstage integration
-//
-// TODO:
-// * include styles
+/*
+ * TiddlyWiki macro wrapper and backstage integration
+ */
 
 config.macros.TiddlyRecon = {
 	handler: function(place, macroName, params, wikifier, paramString, tiddler) {

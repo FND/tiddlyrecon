@@ -14,15 +14,16 @@ $.TiddlyRecon = function(root, host) {
 
 // display status
 var loadStatus = function() {
+	var container = $('<dl id="status" />').hide().appendTo($.TiddlyRecon.root);
 	var populateStatus = function(data, status, error) {
-		$('<dl id="status" />').
+		container.
 			append("<dt>user</dt>\n").
 			create("<dd />\n").text(data.username).end().
 			append("<dt>server</dt>\n").
 			create("<dd />\n").
 				create("<a />").attr("href", tw.host).text(tw.host).end().
 				end().
-			appendTo($.TiddlyRecon.root);
+			show();
 	};
 	tw.loadData("/status", populateStatus);
 };

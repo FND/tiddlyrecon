@@ -1,17 +1,17 @@
+* error handling (AJAX operations - also: binary tiddlers)
+* fix tooltips
 * avoid IDs
 * use A elements for collection items
 ** would also fix cross-browser :hover issues
+* loading indicator
 * integrate jQuery.notify
-* auto-discovery of host and server_prefix (via /status?)
 * special handling for (none) and (all) in recipes and bags, respectively
-* UI for specifying host (in status bar)
 * tiddler display swallows line breaks
-* pagination for collections
-* edit functionality
-* visualize recipe cascade (strike out duplicate tiddlers)
 * #tiddler lacks bottom border (visible if #tiddlers .listing is taller)
+* UI for specifying host (in status bar)
+* pagination for collections
+* edit functionality (creating recipes/bags/tiddlers, modifying policies)
+* visualize recipe cascade (highlighting duplicate tiddlers)
 
-* status is not on top
-* integrate TiddlyWiki macro into backstage
 * wikify tiddler contents in TiddlyWiki macro
 * include styles
