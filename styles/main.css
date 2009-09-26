@@ -44,6 +44,8 @@ body {
 }
 
 .entity {
+	position: relative; /* common stacking context with floated collection items */
+	z-index: 20;
 	overflow: auto; /* contain surrounding floats -- XXX: not cross-browser compatible? */
 	padding-left: 15px; /* gutter */
 	background-color: #FFF;
@@ -90,6 +92,11 @@ body {
 	width: 6em;
 	margin-right: -1em; /* XXX: should be 6em - 10px!? */
 	cursor: pointer;
+}
+
+.listing li:hover {
+	position: relative;  /* common stacking context with entities */
+	z-index: 30;
 }
 
 #recipes li:hover,
