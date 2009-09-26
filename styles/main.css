@@ -28,7 +28,8 @@ body {
 }
 
 .collection,
-.entity {
+.entity,
+.content {
 	min-height: 200px; /* XXX: not cross-browser compatible */
 	border: 1px solid #000;
 	border-width: 1px 0 0 1px;
@@ -40,7 +41,7 @@ body {
 }
 
 .collection h2 {
-	margin: 5px;
+	margin: 5px; /* XXX: use padding on container instead!? */
 }
 
 .entity {
@@ -60,12 +61,10 @@ body {
 	margin: -1px 0 0 -1px; /* collapse double margins */
 }
 
-#recipe {
-	background-color: #B7CAEB;
-}
-
-#bag {
-	background-color: #EEC6E6;
+#tiddler .content {
+	padding: 5px;
+	overflow: auto;
+	white-space: pre; /* XXX: should be pre-wrap? -- XXX: temporary workaround (until wikified)? */
 }
 
 .listing {
@@ -100,21 +99,6 @@ body {
 	z-index: 30;
 }
 
-#recipes li:hover,
-#recipes .active {
-	background-color: #B7CAEB;
-}
-
-#bags li:hover,
-#bags .active {
-	background-color: #EEC6E6;
-}
-
-#tiddlers li:hover,
-#tiddlers .active {
-	background-color: #FFF; /* TODO */
-}
-
 /* formatting */
 
 #status dt {
@@ -128,4 +112,26 @@ body {
 #status a {
 	text-decoration: none;
 	color: #000;
+}
+
+#recipe,
+#recipes li:hover,
+#recipes .active {
+	background-color: #B7CAEB;
+}
+
+#bag,
+#bags li:hover,
+#bags .active {
+	background-color: #EEC6E6;
+}
+
+#tiddler,
+#tiddlers li:hover,
+#tiddlers .active {
+	background-color: #F6E9B1; /* XXX: not entirely accurate; cf. original design */
+}
+
+#tiddler .content {
+	background-color: #FFF;
 }
