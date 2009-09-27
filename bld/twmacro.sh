@@ -18,7 +18,7 @@ MINFILE="TiddlyRecon.min.js"
 bld/init.sh
 echo "//}}}" | \
 	cat bld/resources/twmacro_template.js scripts/chrjs/main.js \
-		scripts/main.js scripts/twmacro.js - \
+		scripts/main.js scripts/config.js scripts/twmacro.js - \
 	> $OUTFILE
 
 if [ "$MINIFY" = "min" ]; then

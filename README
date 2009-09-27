@@ -1,6 +1,10 @@
 TiddlyRecon
 TiddlyWeb data explorer
 
+Configuration
+
+The host URI is defined in scripts/config.js.
+
 Dependencies
 
 TiddlyRecon requires both jQuery and chrjs:
