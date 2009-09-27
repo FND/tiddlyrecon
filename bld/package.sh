@@ -8,4 +8,4 @@ if [ ! -d bld ]; then
 fi
 
 bld/init.sh
-zip -r TiddlyRecon.zip ./ -x "*.git*" -x "bld/*" # XXX: tarbomb
+zip -r bld/TiddlyRecon.zip ./ -x "*.git*" -x "bld/*" # XXX: tarbomb

@@ -1,2 +1,2 @@
 scripts/jquery.min.js
-yuicompressor*.jar
+bld/yuicompressor*.jar

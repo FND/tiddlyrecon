@@ -12,8 +12,8 @@ fi
 
 MINIFY=$1
 
-OUTFILE="TiddlyRecon.js"
-MINFILE="TiddlyRecon.min.js"
+OUTFILE="bld/TiddlyRecon.js"
+MINFILE="bld/TiddlyRecon.min.js"
 
 bld/init.sh
 echo "//}}}" | \
@@ -30,7 +30,7 @@ if [ "$MINIFY" = "min" ]; then
 		| sed -n "/^$STARTPATTERN/,/$ENDPATTERN/ p"`
 	echo "$HEADER
 //{{{" > $MINFILE
-	java -jar yuicompressor-*.jar $OUTFILE >> $MINFILE
+	java -jar bld/yuicompressor-*.jar $OUTFILE >> $MINFILE
 	echo "
 //}}}" >> $MINFILE
 fi
