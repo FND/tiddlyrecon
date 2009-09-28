@@ -65,22 +65,24 @@ body {
 	padding: 5px;
 	overflow: auto;
 	white-space: pre; /* XXX: should be pre-wrap? -- XXX: temporary workaround (until wikified)? */
+	font-family: monospace;
 }
 
 .listing {
 	float: left;
+	width: 5em;
 	margin: 1px 10px 10px; /* top margin compensates for childrends' negative margin */
 	list-style-type: none;
 }
 
 .listing li {
-	width: 5em;
 	overflow: hidden;
 	white-space: nowrap;
 	margin-top: -1px; /* collapse double margins */
 	border: 1px solid #000;
 	padding: 1px 5px;
 	background-color: #FFF;
+	cursor: pointer;
 }
 
 .active {
@@ -90,8 +92,6 @@ body {
 .listing li:hover,
 .listing .active {
 	width: 6em;
-	margin-right: -1em; /* XXX: should be 6em - 10px!? */
-	cursor: pointer;
 }
 
 .listing li:hover {
