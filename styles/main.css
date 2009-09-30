@@ -70,8 +70,7 @@ body {
 
 .listing {
 	float: left;
-	width: 5em;
-	margin: 1px 10px 10px; /* top margin compensates for childrends' negative margin */
+	margin: 1px -1px 10px 10px; /* top margin compensates for childrends' negative margin */
 	list-style-type: none;
 }
 
@@ -91,12 +90,12 @@ body {
 
 .listing li:hover,
 .listing .active {
-	width: 6em;
-}
-
-.listing li:hover {
 	position: relative;  /* common stacking context with entities */
 	z-index: 30;
+}
+
+.listing .active {
+	border-right: none;
 }
 
 /* formatting */
