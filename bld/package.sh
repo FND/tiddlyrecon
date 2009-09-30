@@ -10,5 +10,7 @@ if [ ! -d bld ]; then
 fi
 
 bld/init.sh
+[ `git status | wc -l` = "2" ] || \
+	echo "WARNING: Repository not clean."
 zip -r $OUTFILE ./ -x "*.git*" -x "bld/*" # XXX: tarbomb
 echo "created $OUTFILE"
