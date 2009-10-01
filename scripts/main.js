@@ -31,18 +31,11 @@ var loadStatus = function() {
 // list recipes
 var populateRecipes = function(data, status, error) {
 	notify("populating recipes");
-
 	data.splice(0, 0, "(none)");
-
-	$('<div id="recipes" class="collection container" />').
-		append("<h2>Recipes</h2>").
-		attach('<ul class="listing" />').
-			append($.map(data, function(item, i) {
-				return $("<li />").text(item).click(loadRecipe)[0];
-			})).
-			eq(0).addClass("virtual").end().
-			end().
-		appendTo($.TiddlyRecon.root);
+	listCollection("Recipes", data, function(item, i) {
+		return $("<li />").text(item).click(loadRecipe).
+			addClass(i == 0 ? "virtual" : null)[0];
+	}).appendTo($.TiddlyRecon.root);
 };
 
 // display recipe
@@ -66,20 +59,13 @@ var loadRecipe = function(ev) {
 // list bags
 var populateBags = function(container, data, status, error) {
 	notify("populating bags");
-
 	data.recipe.splice(0, 0, ["(all)", ""]);
-
-	$('<div id="bags" class="collection container" />').
-		append("<h2>Bags</h2>").
-		attach('<ul class="listing" />').
-			append($.map(data.recipe, function(item, i) {
-				var bag_name = item[0];
-				var filter = item[1] || "(none)"; // XXX: bad default
-				return $("<li />").text(bag_name).data("filter", filter).click(loadBag)[0];
-			})).
-			eq(0).addClass("virtual").end().
-			end().
-		appendTo(container);
+	listCollection("Bags", data.recipe, function(item, i) {
+		var bag = item[0];
+		var filter = item[1] || "";
+		return $("<li />").text(bag).data("filter", filter).click(loadBag).
+			addClass(i == 0 ? "virtual" : null)[0];
+	}).appendTo(container);
 };
 
 // display bag
@@ -106,15 +92,9 @@ var loadBag = function(ev) {
 
 var populateTiddlers = function(container, data, status, error) {
 	notify("populating tiddlers");
-
-	$('<div id="tiddlers" class="collection" />').
-		append("<h2>Tiddlers</h2>").
-		attach('<ul class="listing" />').
-			append($.map(data, function(item, i) {
-				return $("<li />").text(item.title).data("bag", item.bag).click(loadTiddler)[0];
-			})).
-			end().
-		appendTo(container);
+	listCollection("Tiddlers", data, function(item, i) {
+		return $("<li />").text(item.title).data("bag", item.bag).click(loadTiddler)[0];
+	}).appendTo(container);
 };
 
 var loadTiddler = function(ev) {
@@ -145,12 +125,23 @@ var populateTiddler = function(container, data, status, error) {
 	$('<div class="content" />').text(data.text).appendTo(container); // XXX: request wikified text!?
 };
 
+// utility functions
+
+// create a list of collection items
+// mapping is the $.map callback for each item, returning an LI element
+// title is used for element ID (lowercased)
+var listCollection = function(title, items, mapping) {
+	return $('<div class="collection container" />').
+		attr("id", title.toLowerCase()). // XXX: inappropriate?
+		attach("<h2 />").text(title).end().
+		attach('<ul class="listing" />').
+			append($.map(items, mapping)).end();
+};
+
 var setActive = function(node) {
 	node.siblings().removeClass("active");
 	node.addClass("active");
 };
-
-// utility functions -- TODO: move into separate module
 
 var notify = function(msg) { // TODO: use jQuery.notify
 	// XXX: DEBUG
@@ -162,7 +153,7 @@ var notify = function(msg) { // TODO: use jQuery.notify
 // utility method to create and then select elements
 // in combination with jQuery's end method, this is generally useful for
 // dynamically generating nested elements within a chain of operations
-$.fn.attach = function(html) {
+$.fn.attach = function(html) { // TODO: move into separate module
 	return this.append(html).children(":last");
 };
 

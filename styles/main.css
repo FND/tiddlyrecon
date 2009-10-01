@@ -122,13 +122,13 @@ body {
 #bag,
 #bags li:hover,
 #bags .active {
-	background-color: #EEC6E6;
+	background-color: #EEC6E6; /* XXX: dark version: #B99AB3 */
 }
 
 #tiddler,
 #tiddlers li:hover,
 #tiddlers .active {
-	background-color: #F6E9B1; /* XXX: not entirely accurate; cf. original design */
+	background-color: #F4E8B1; /* XXX: dark version: D1C696 */
 }
 
 #tiddler .content {
