@@ -75,7 +75,7 @@ var populateBags = function(container, data, status, error) {
 			append($.map(data.recipe, function(item, i) {
 				var bag_name = item[0];
 				var filter = item[1] || "(none)"; // XXX: bad default
-				return $("<li />").text(bag_name).attr("title", filter).click(loadBag)[0]; // XXX: using title to retain filter is hacky
+				return $("<li />").text(bag_name).data("filter", filter).click(loadBag)[0];
 			})).
 			eq(0).addClass("virtual").end().
 			end().
@@ -111,7 +111,7 @@ var populateTiddlers = function(container, data, status, error) {
 		append("<h2>Tiddlers</h2>").
 		create('<ul class="listing" />').
 			append($.map(data, function(item, i) {
-				return $("<li />").text(item.title).attr("title", item.bag).click(loadTiddler)[0]; // XXX: using title to retain bag is hacky
+				return $("<li />").text(item.title).data("bag", item.bag).click(loadTiddler)[0];
 			})).
 			end().
 		appendTo(container);
@@ -121,7 +121,7 @@ var loadTiddler = function(ev) {
 	var tiddler_node = $(this);
 	setActive(tiddler_node);
 	var title = tiddler_node.text();
-	var bag = tiddler_node.attr("title");
+	var bag = tiddler_node.data("bag");
 	notify("loading tiddler", title, bag);
 
 	var tiddler_container = tiddler_node.parent().parent(). // XXX: simpler way to do this?
