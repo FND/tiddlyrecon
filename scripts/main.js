@@ -18,10 +18,10 @@ var loadStatus = function() {
 	var populateStatus = function(data, status, error) {
 		container.
 			append("<dt>user</dt>\n").
-			create("<dd />\n").text(data.username).end().
+			attach("<dd />\n").text(data.username).end().
 			append("<dt>server</dt>\n").
-			create("<dd />\n").
-				create("<a />").attr("href", tw.host).text(tw.host).end().
+			attach("<dd />\n").
+				attach("<a />").attr("href", tw.host).text(tw.host).end().
 				end().
 			show();
 	};
@@ -36,7 +36,7 @@ var populateRecipes = function(data, status, error) {
 
 	$('<div id="recipes" class="collection container" />').
 		append("<h2>Recipes</h2>").
-		create('<ul class="listing" />').
+		attach('<ul class="listing" />').
 			append($.map(data, function(item, i) {
 				return $("<li />").text(item).click(loadRecipe)[0];
 			})).
@@ -54,8 +54,8 @@ var loadRecipe = function(ev) {
 
 	var recipe_container = recipe_node.parent().parent(). // XXX: simpler way to do this?
 		find("#recipe").remove().end(). // clear existing selection -- TODO: allow for multiple recipes?
-		create('<div id="recipe" class="entity" />').
-			create("<h3 />").text(recipe_name).end();
+		attach('<div id="recipe" class="entity" />').
+			attach("<h3 />").text(recipe_name).end();
 
 	var callback = function(data, status, error) {
 		populateBags(recipe_container, data, status, error);
@@ -71,7 +71,7 @@ var populateBags = function(container, data, status, error) {
 
 	$('<div id="bags" class="collection container" />').
 		append("<h2>Bags</h2>").
-		create('<ul class="listing" />').
+		attach('<ul class="listing" />').
 			append($.map(data.recipe, function(item, i) {
 				var bag_name = item[0];
 				var filter = item[1] || "(none)"; // XXX: bad default
@@ -91,8 +91,8 @@ var loadBag = function(ev) {
 
 	var bag_container = bag_node.parent().parent(). // XXX: simpler way to do this?
 		find("#bag").remove().end(). // clear existing selection -- TODO: allow for multiple bags?
-		create('<div id="bag" class="entity" />').
-			create("<h3 />").text(bag_name).end();
+		attach('<div id="bag" class="entity" />').
+			attach("<h3 />").text(bag_name).end();
 
 	var callback = function(data, status, error) {
 		populateTiddlers(bag_container, data, status, error);
@@ -109,7 +109,7 @@ var populateTiddlers = function(container, data, status, error) {
 
 	$('<div id="tiddlers" class="collection" />').
 		append("<h2>Tiddlers</h2>").
-		create('<ul class="listing" />').
+		attach('<ul class="listing" />').
 			append($.map(data, function(item, i) {
 				return $("<li />").text(item.title).data("bag", item.bag).click(loadTiddler)[0];
 			})).
@@ -126,8 +126,8 @@ var loadTiddler = function(ev) {
 
 	var tiddler_container = tiddler_node.parent().parent(). // XXX: simpler way to do this?
 		find("#tiddler").remove().end(). // clear existing selection -- TODO: allow for multiple bags?
-		create('<div id="tiddler" class="entity" />').
-			create("<h3 />").text(title).end();
+		attach('<div id="tiddler" class="entity" />').
+			attach("<h3 />").text(title).end();
 
 	var callback = function(data, status, error) {
 		populateTiddler(tiddler_container, data, status, error);
@@ -162,7 +162,7 @@ var notify = function(msg) { // TODO: use jQuery.notify
 // utility method to create and then select elements
 // in combination with jQuery's end method, this is generally useful for
 // dynamically generating nested elements within a chain of operations
-$.fn.create = function(html) {
+$.fn.attach = function(html) {
 	return this.append(html).children(":last");
 };
 
