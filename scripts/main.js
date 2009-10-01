@@ -32,13 +32,15 @@ var loadStatus = function() {
 var populateRecipes = function(data, status, error) {
 	notify("populating recipes");
 
+	data.splice(0, 0, "(none)");
+
 	$('<div id="recipes" class="collection container" />').
 		append("<h2>Recipes</h2>").
 		create('<ul class="listing" />').
-			create("<li><i>(none)</i></li>").click(loadRecipe).end().
 			append($.map(data, function(item, i) {
 				return $("<li />").text(item).click(loadRecipe)[0];
 			})).
+			eq(0).addClass("virtual").end().
 			end().
 		appendTo($.TiddlyRecon.root);
 };
@@ -65,15 +67,17 @@ var loadRecipe = function(ev) {
 var populateBags = function(container, data, status, error) {
 	notify("populating bags");
 
+	data.recipe.splice(0, 0, ["(all)", ""]);
+
 	$('<div id="bags" class="collection container" />').
 		append("<h2>Bags</h2>").
 		create('<ul class="listing" />').
-			create("<li><i>(all)</i></li>").click(loadBag).end().
 			append($.map(data.recipe, function(item, i) {
 				var bag_name = item[0];
 				var filter = item[1] || "(none)"; // XXX: bad default
 				return $("<li />").text(bag_name).attr("title", filter).click(loadBag)[0]; // XXX: using title to retain filter is hacky
 			})).
+			eq(0).addClass("virtual").end().
 			end().
 		appendTo(container);
 };

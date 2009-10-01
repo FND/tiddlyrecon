@@ -134,3 +134,7 @@ body {
 #tiddler .content {
 	background-color: #FFF;
 }
+
+.virtual {
+	font-style: italic;
+}
