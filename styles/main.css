@@ -87,13 +87,13 @@ body {
 }
 
 .listing a:hover,
-.listing .active {
+.listing .active a {
 	position: relative;  /* common stacking context with entities */
 	z-index: 30;
 	outline: none; /* suppresses active/focus state borders */
 }
 
-.listing .active {
+.listing .active a {
 	border-right: none;
 }
 
@@ -114,19 +114,19 @@ body {
 
 #recipe,
 #recipes .listing a:hover,
-#recipes .active {
+#recipes .active a {
 	background-color: #B7CAEB;
 }
 
 #bag,
 #bags .listing a:hover,
-#bags .active {
+#bags .active a {
 	background-color: #EEC6E6; /* XXX: dark version: #B99AB3 */
 }
 
 #tiddler,
 #tiddlers .listing a:hover,
-#tiddlers .active {
+#tiddlers .active a {
 	background-color: #F4E8B1; /* XXX: dark version: D1C696 */
 }
 

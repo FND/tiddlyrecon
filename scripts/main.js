@@ -145,9 +145,9 @@ var listCollection = function(title, items, mapping) {
 };
 
 var setActive = function(node) {
-	// XXX: ideally, this would apply to the LI rather than the A, but that complicates styling
-	node.parent().siblings().find("a").removeClass("active");
-	node.addClass("active");
+	node.parent().
+		siblings().removeClass("active").end().
+		addClass("active");
 };
 
 var notify = function(msg) { // TODO: use jQuery.notify
