@@ -74,24 +74,23 @@ body {
 	list-style-type: none;
 }
 
-.listing li {
+.listing a {
+	display: block;
 	overflow: hidden;
 	white-space: nowrap;
 	margin-top: -1px; /* collapse double margins */
 	border: 1px solid #000;
 	padding: 1px 5px;
+	text-decoration: none;
+	color: #000;
 	background-color: #FFF;
-	cursor: pointer;
 }
 
-.active {
-	font-style: italic;
-}
-
-.listing li:hover,
+.listing a:hover,
 .listing .active {
 	position: relative;  /* common stacking context with entities */
 	z-index: 30;
+	outline: none; /* suppresses active/focus state borders */
 }
 
 .listing .active {
@@ -114,19 +113,19 @@ body {
 }
 
 #recipe,
-#recipes li:hover,
+#recipes .listing a:hover,
 #recipes .active {
 	background-color: #B7CAEB;
 }
 
 #bag,
-#bags li:hover,
+#bags .listing a:hover,
 #bags .active {
 	background-color: #EEC6E6; /* XXX: dark version: #B99AB3 */
 }
 
 #tiddler,
-#tiddlers li:hover,
+#tiddlers .listing a:hover,
 #tiddlers .active {
 	background-color: #F4E8B1; /* XXX: dark version: D1C696 */
 }
@@ -135,6 +134,7 @@ body {
 	background-color: #FFF;
 }
 
-.virtual {
+.virtual,
+.active {
 	font-style: italic;
 }

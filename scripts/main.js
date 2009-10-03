@@ -33,7 +33,8 @@ var populateRecipes = function(data, status, error) {
 	notify("populating recipes");
 	data.splice(0, 0, "(none)");
 	listCollection("Recipes", data, function(item, i) {
-		return $("<li />").text(item).click(loadRecipe).
+		return $("<li />").
+			attach('<a href="#" />').text(item).click(loadRecipe).end().
 			addClass(i == 0 ? "virtual" : null)[0];
 	}).appendTo($.TiddlyRecon.root);
 };
@@ -45,7 +46,7 @@ var loadRecipe = function(ev) {
 	var recipe_name = recipe_node.text(); // TODO: special handling for "(none)";
 	notify("loading recipe", recipe_name);
 
-	var recipe_container = recipe_node.parent().parent(). // XXX: simpler way to do this?
+	var recipe_container = recipe_node.closest("div").
 		find("#recipe").remove().end(). // clear existing selection -- TODO: allow for multiple recipes?
 		attach('<div id="recipe" class="entity" />').
 			attach("<h3 />").text(recipe_name).end();
@@ -54,6 +55,7 @@ var loadRecipe = function(ev) {
 		populateBags(recipe_container, data, status, error);
 	};
 	tw.loadRecipe(recipe_name, callback);
+	return false;
 };
 
 // list bags
@@ -63,7 +65,8 @@ var populateBags = function(container, data, status, error) {
 	listCollection("Bags", data.recipe, function(item, i) {
 		var bag = item[0];
 		var filter = item[1] || "";
-		return $("<li />").text(bag).data("filter", filter).click(loadBag).
+		return $("<li />").
+			attach('<a href="#" />').text(bag).data("filter", filter).click(loadBag).end().
 			addClass(i == 0 ? "virtual" : null)[0];
 	}).appendTo(container);
 };
@@ -75,7 +78,7 @@ var loadBag = function(ev) {
 	var bag_name = bag_node.text(); // TODO: special handling for "(all)";
 	notify("loading bag", bag_name);
 
-	var bag_container = bag_node.parent().parent(). // XXX: simpler way to do this?
+	var bag_container = bag_node.closest("div").
 		find("#bag").remove().end(). // clear existing selection -- TODO: allow for multiple bags?
 		attach('<div id="bag" class="entity" />').
 			attach("<h3 />").text(bag_name).end();
@@ -88,12 +91,14 @@ var loadBag = function(ev) {
 		name: bag_name
 	};
 	tw.loadTiddlers(container, callback);
+	return false;
 };
 
 var populateTiddlers = function(container, data, status, error) {
 	notify("populating tiddlers");
 	listCollection("Tiddlers", data, function(item, i) {
-		return $("<li />").text(item.title).data("bag", item.bag).click(loadTiddler)[0];
+		return $("<li />").
+			attach('<a href="#" />').text(item.title).data("bag", item.bag).click(loadTiddler).end()[0];
 	}).appendTo(container);
 };
 
@@ -104,7 +109,7 @@ var loadTiddler = function(ev) {
 	var bag = tiddler_node.data("bag");
 	notify("loading tiddler", title, bag);
 
-	var tiddler_container = tiddler_node.parent().parent(). // XXX: simpler way to do this?
+	var tiddler_container = tiddler_node.closest("div").
 		find("#tiddler").remove().end(). // clear existing selection -- TODO: allow for multiple bags?
 		attach('<div id="tiddler" class="entity" />').
 			attach("<h3 />").text(title).end();
@@ -117,6 +122,7 @@ var loadTiddler = function(ev) {
 		name: bag
 	};
 	tw.loadTiddler(title, container, callback);
+	return false;
 };
 
 var populateTiddler = function(container, data, status, error) {
@@ -139,7 +145,8 @@ var listCollection = function(title, items, mapping) {
 };
 
 var setActive = function(node) {
-	node.siblings().removeClass("active");
+	// XXX: ideally, this would apply to the LI rather than the A, but that complicates styling
+	node.parent().siblings().find("a").removeClass("active");
 	node.addClass("active");
 };
 

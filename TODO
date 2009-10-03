@@ -1,8 +1,5 @@
 * error handling (AJAX operations - also: binary tiddlers)
-* fix tooltips
 * avoid IDs
-* use A elements for collection items
-** would also fix cross-browser :hover issues
 * loading indicator
 * integrate jQuery.notify
 * special handling for (none) and (all) in recipes and bags, respectively
