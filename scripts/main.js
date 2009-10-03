@@ -9,7 +9,9 @@ $.TiddlyRecon = function(root, host) {
 	notify("loading status");
 	loadStatus();
 	notify("loading recipes");
-	tw.loadRecipes(populateRecipes);
+	tw.loadRecipes(function(data, status, error) {
+		populateRecipes($.TiddlyRecon.root, data, status, error);
+	});
 };
 
 // display status
@@ -29,13 +31,13 @@ var loadStatus = function() {
 };
 
 // list recipes
-var populateRecipes = function(data, status, error) {
+var populateRecipes = function(container, data, status, error) {
 	notify("populating recipes");
 	data.splice(0, 0, "(none)");
 	listCollection("Recipes", data, function(el, item, i) {
 		return el.addClass(i == 0 ? "virtual" : null).
 			find("a").text(item).click(loadRecipe).end();
-	}).appendTo($.TiddlyRecon.root);
+	}).appendTo(container);
 };
 
 // display recipe
@@ -142,8 +144,7 @@ var listCollection = function(title, items, callback) {
 			append($.map(items, function(item, i) {
 				var el = $("<li />").append('<a href="#" />');
 				return callback(el, item, i)[0];
-			})).
-			end();
+			})).end();
 };
 
 var setActive = function(node) {
