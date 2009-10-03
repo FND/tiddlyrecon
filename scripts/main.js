@@ -32,10 +32,9 @@ var loadStatus = function() {
 var populateRecipes = function(data, status, error) {
 	notify("populating recipes");
 	data.splice(0, 0, "(none)");
-	listCollection("Recipes", data, function(item, i) {
-		return $("<li />").
-			attach('<a href="#" />').text(item).click(loadRecipe).end().
-			addClass(i == 0 ? "virtual" : null)[0];
+	listCollection("Recipes", data, function(el, item, i) {
+		return el.addClass(i == 0 ? "virtual" : null).
+			find("a").text(item).click(loadRecipe).end();
 	}).appendTo($.TiddlyRecon.root);
 };
 
@@ -62,12 +61,11 @@ var loadRecipe = function(ev) {
 var populateBags = function(container, data, status, error) {
 	notify("populating bags");
 	data.recipe.splice(0, 0, ["(all)", ""]);
-	listCollection("Bags", data.recipe, function(item, i) {
+	listCollection("Bags", data.recipe, function(el, item, i) {
 		var bag = item[0];
 		var filter = item[1] || "";
-		return $("<li />").
-			attach('<a href="#" />').text(bag).data("filter", filter).click(loadBag).end().
-			addClass(i == 0 ? "virtual" : null)[0];
+		return el.addClass(i == 0 ? "virtual" : null).
+			find("a").text(bag).data("filter", filter).click(loadBag).end();
 	}).appendTo(container);
 };
 
@@ -96,9 +94,8 @@ var loadBag = function(ev) {
 
 var populateTiddlers = function(container, data, status, error) {
 	notify("populating tiddlers");
-	listCollection("Tiddlers", data, function(item, i) {
-		return $("<li />").
-			attach('<a href="#" />').text(item.title).data("bag", item.bag).click(loadTiddler).end()[0];
+	listCollection("Tiddlers", data, function(el, item, i) {
+		return el.find("a").text(item.title).data("bag", item.bag).click(loadTiddler).end();
 	}).appendTo(container);
 };
 
@@ -134,14 +131,19 @@ var populateTiddler = function(container, data, status, error) {
 // utility functions
 
 // create a list of collection items
-// mapping is the $.map callback for each item, returning an LI element
-// title is used for element ID (lowercased)
-var listCollection = function(title, items, mapping) {
+// title is used as heading and also as element ID (lowercased)
+// items is the collection's data array
+// callback is a function to customize each item's DOM element
+var listCollection = function(title, items, callback) {
 	return $('<div class="collection container" />').
 		attr("id", title.toLowerCase()). // XXX: inappropriate?
 		attach("<h2 />").text(title).end().
 		attach('<ul class="listing" />').
-			append($.map(items, mapping)).end();
+			append($.map(items, function(item, i) {
+				var el = $("<li />").append('<a href="#" />');
+				return callback(el, item, i)[0];
+			})).
+			end();
 };
 
 var setActive = function(node) {
