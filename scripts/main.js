@@ -33,6 +33,7 @@ var loadStatus = function() {
 // list recipes
 var populateRecipes = function(container, data, status, error) {
 	notify("populating recipes");
+	data = data.sort();
 	data.splice(0, 0, "(none)");
 	listCollection("Recipes", data, function(el, item, i) {
 		return el.addClass(i == 0 ? "virtual" : null).
@@ -59,11 +60,16 @@ var loadRecipe = function(ev) {
 	return false;
 };
 
-// list bags
+// list bags in recipe
 var populateBags = function(container, data, status, error) {
 	notify("populating bags");
-	data.recipe.splice(0, 0, ["(all)", ""]);
-	listCollection("Bags", data.recipe, function(el, item, i) {
+	var recipe = data.recipe.sort(function(a, b) {
+		var x = a[0];
+		var y = b[0];
+		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+	});
+	recipe.splice(0, 0, ["(all)", ""]);
+	listCollection("Bags", recipe, function(el, item, i) {
 		var bag = item[0];
 		var filter = item[1] || "";
 		return el.addClass(i == 0 ? "virtual" : null).
@@ -96,6 +102,11 @@ var loadBag = function(ev) {
 
 var populateTiddlers = function(container, data, status, error) {
 	notify("populating tiddlers");
+	data = data.sort(function(a, b) {
+		var x = a.title;
+		var y = b.title;
+		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+	});
 	listCollection("Tiddlers", data, function(el, item, i) {
 		return el.find("a").text(item.title).data("bag", item.bag).click(loadTiddler).end();
 	}).appendTo(container);
