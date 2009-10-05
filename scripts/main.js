@@ -33,13 +33,8 @@ var loadStatus = function() {
 // list recipes
 var populateRecipes = function(container, data, status, error) {
 	notify("populating recipes");
-	data = data.sort(function(a, b) {
-		var x = a.toLowerCase();
-		var y = b.toLowerCase();
-		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-	});
 	data.splice(0, 0, "(none)");
-	listCollection("Recipes", data, function(el, item, i) {
+	listCollection("Recipes", data, null, function(el, item, i) {
 		return el.addClass(i == 0 ? "virtual" : null).
 			find("a").text(item).click(loadRecipe).end();
 	}).appendTo(container);
@@ -67,13 +62,9 @@ var loadRecipe = function(ev) {
 // list bags in recipe
 var populateBags = function(container, data, status, error) {
 	notify("populating bags");
-	var recipe = data.recipe.sort(function(a, b) {
-		var x = a[0].toLowerCase();
-		var y = b[0].toLowerCase();
-		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-	});
-	recipe.splice(0, 0, ["(all)", ""]);
-	listCollection("Bags", recipe, function(el, item, i) {
+	data.recipe.splice(0, 0, ["(all)", ""]);
+	var sortAttr = 0;
+	listCollection("Bags", data.recipe, sortAttr, function(el, item, i) {
 		var bag = item[0];
 		var filter = item[1] || "";
 		return el.addClass(i == 0 ? "virtual" : null).
@@ -111,7 +102,8 @@ var populateTiddlers = function(container, data, status, error) {
 		var y = b.title.toLowerCase();
 		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	});
-	listCollection("Tiddlers", data, function(el, item, i) {
+	var sortAttr = "title";
+	listCollection("Tiddlers", data, sortAttr, function(el, item, i) {
 		return el.find("a").text(item.title).data("bag", item.bag).click(loadTiddler).end();
 	}).appendTo(container);
 };
@@ -150,8 +142,14 @@ var populateTiddler = function(container, data, status, error) {
 // create a list of collection items
 // title is used as heading and also as element ID (lowercased)
 // items is the collection's data array
+// sortAttr is an optional attribute by which items are to be sorted
 // callback is a function to customize each item's DOM element
-var listCollection = function(title, items, callback) {
+var listCollection = function(title, items, sortAttr, callback) {
+	items = items.sort(function(a, b) {
+		var x = sortAttr !== null ? a[sortAttr].toLowerCase() : a.toLowerCase();
+		var y = sortAttr !== null ? b[sortAttr].toLowerCase() : b.toLowerCase();
+		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+	}); // XXX: does not take into account special items ("(none)", "(all)")
 	return $('<div class="collection container" />').
 		attr("id", title.toLowerCase()). // XXX: inappropriate?
 		attach("<h2 />").text(title).end().
