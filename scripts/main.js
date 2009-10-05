@@ -97,11 +97,6 @@ var loadBag = function(ev) {
 
 var populateTiddlers = function(container, data, status, error) {
 	notify("populating tiddlers");
-	data = data.sort(function(a, b) {
-		var x = a.title.toLowerCase();
-		var y = b.title.toLowerCase();
-		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-	});
 	var sortAttr = "title";
 	listCollection("Tiddlers", data, sortAttr, function(el, item, i) {
 		return el.find("a").text(item.title).data("bag", item.bag).click(loadTiddler).end();
