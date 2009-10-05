@@ -33,7 +33,11 @@ var loadStatus = function() {
 // list recipes
 var populateRecipes = function(container, data, status, error) {
 	notify("populating recipes");
-	data = data.sort();
+	data = data.sort(function(a, b) {
+		var x = a.toLowerCase();
+		var y = b.toLowerCase();
+		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+	});
 	data.splice(0, 0, "(none)");
 	listCollection("Recipes", data, function(el, item, i) {
 		return el.addClass(i == 0 ? "virtual" : null).
@@ -64,8 +68,8 @@ var loadRecipe = function(ev) {
 var populateBags = function(container, data, status, error) {
 	notify("populating bags");
 	var recipe = data.recipe.sort(function(a, b) {
-		var x = a[0];
-		var y = b[0];
+		var x = a[0].toLowerCase();
+		var y = b[0].toLowerCase();
 		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	});
 	recipe.splice(0, 0, ["(all)", ""]);
@@ -103,8 +107,8 @@ var loadBag = function(ev) {
 var populateTiddlers = function(container, data, status, error) {
 	notify("populating tiddlers");
 	data = data.sort(function(a, b) {
-		var x = a.title;
-		var y = b.title;
+		var x = a.title.toLowerCase();
+		var y = b.title.toLowerCase();
 		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	});
 	listCollection("Tiddlers", data, function(el, item, i) {
