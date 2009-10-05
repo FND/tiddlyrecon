@@ -3,7 +3,6 @@
 * loading indicator
 * integrate jQuery.notify
 * special handling for (none) and (all) in recipes and bags, respectively
-* #tiddler lacks bottom border (visible if #tiddlers .listing is taller)
 * UI for specifying host (in status bar)
 * pagination for collections
 * edit functionality (creating recipes/bags/tiddlers, modifying policies)

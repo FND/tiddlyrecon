@@ -61,6 +61,10 @@ body {
 	margin: -1px 0 0 -1px; /* collapse double margins */
 }
 
+#tiddler {
+	border-bottom-width: 1px;
+}
+
 #tiddler .content {
 	padding: 5px;
 	overflow: auto;
