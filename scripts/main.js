@@ -157,8 +157,13 @@ var listCollection = function(title, items, sortAttr, callback) {
 
 var setActive = function(node) {
 	node.parent().
-		siblings().removeClass("active").end().
-		addClass("active");
+		parent().find(".indicator").remove().end().end().
+		siblings().
+			removeClass("active").
+			end().
+		addClass("active").
+		find("a").
+			attach('<span class="indicator">');
 };
 
 var notify = function(msg) { // TODO: use jQuery.notify

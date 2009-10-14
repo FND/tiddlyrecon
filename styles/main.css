@@ -98,7 +98,18 @@ body {
 }
 
 .listing .active a {
+	position: relative;  /* required for child's abspos */
 	border-right: none;
+}
+
+.listing .active .indicator {
+	position: absolute;
+	right: 0;
+	width: 0;
+	height: 0;
+	border-width: 0.5em 0 0.5em 0.5em; /* XXX: inacurrate; does not scale!? */
+	border-style: solid;
+	border-color: transparent transparent transparent #FFF;
 }
 
 /* formatting */
