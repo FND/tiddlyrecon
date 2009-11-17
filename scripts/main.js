@@ -159,7 +159,7 @@ var setActive = function(node) {
 	node.parent().
 		siblings().removeClass("active").end().
 		parent().find(".indicator").remove().end().end().
-		find("a").append('<span class="indicator">').
+		find("a").append('<span class="indicator">').end().
 		addClass("active");
 };
 
