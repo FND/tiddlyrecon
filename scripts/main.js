@@ -81,7 +81,7 @@ var populateBags = function(container, data, status, error) {
 		var filter = item[1] || "";
 		return el.addClass(i == 0 ? "virtual" : null).
 			find("a").text(bag).data("filter", filter).click(loadBag).end();
-	}).appendTo(container);
+	}).data("recipe", data.recipe).appendTo(container);
 };
 
 // display bag
@@ -89,21 +89,28 @@ var loadBag = function(ev) {
 	var bag_node = $(this);
 	setActive(bag_node);
 	var bag_name = bag_node.text(); // TODO: special handling for "(all)";
+	bag_name = bag_name == "(all)" ? null : bag_name; // XXX: hacky?
 	notify("loading bag", bag_name);
 
 	var bag_container = bag_node.closest("div").
 		find("#bag").remove().end(). // clear existing selection -- TODO: allow for multiple bags?
 		attach('<div id="bag" class="entity" />').
-			attach("<h3 />").text(bag_name).end();
+			attach("<h3 />").text(bag_name || "").end();
 
 	var callback = function(data, status, error) {
 		populateTiddlers(bag_container, data, status, error);
 	};
-	var container = {
-		type: "bag",
-		name: bag_name
-	};
-	tw.loadTiddlers(container, callback);
+	if(bag_name) {
+		var container = {
+			type: "bag",
+			name: bag_name
+		};
+		tw.loadTiddlers(container, callback);
+	} else {
+		var recipe = bag_node.closest(".collection").data("recipe");
+		console.log(recipe); // XXX: DEBUG
+		// TODO: get tiddlers for each item in recipe
+	}
 	return false;
 };
 
@@ -146,7 +153,7 @@ var populateTiddler = function(container, data, status, error) {
 
 // utility functions
 
-// create a list of collection items
+// creates a list of collection items
 // title is used as heading and also as element ID (lowercased)
 // items is the collection's data array
 // sortAttr is an optional attribute by which items are to be sorted
