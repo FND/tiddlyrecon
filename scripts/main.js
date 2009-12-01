@@ -45,17 +45,18 @@ var loadRecipe = function(ev) {
 	var recipe_node = $(this);
 	setActive(recipe_node);
 	var recipe_name = recipe_node.text();
+	recipe_name = recipe_name == "(none)" ? null : recipe_name; // XXX: hacky?
 	notify("loading recipe", recipe_name);
 
 	var recipe_container = recipe_node.closest("div").
 		find("#recipe").remove().end(). // clear existing selection -- TODO: allow for multiple recipes?
 		attach('<div id="recipe" class="entity" />').
-			attach("<h3 />").text(recipe_name).end();
+			attach("<h3 />").text(recipe_name || "").end();
 
 	var callback = function(data, status, error) {
 		populateBags(recipe_container, data, status, error);
 	};
-	if(recipe_name != "(none)") { // XXX: hacky?
+	if(recipe_name) {
 		tw.loadRecipe(recipe_name, callback);
 	} else {
 		var _callback = function(data, status, error) {
