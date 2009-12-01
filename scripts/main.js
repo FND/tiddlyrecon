@@ -44,7 +44,7 @@ var populateRecipes = function(container, data, status, error) {
 var loadRecipe = function(ev) {
 	var recipe_node = $(this);
 	setActive(recipe_node);
-	var recipe_name = recipe_node.text(); // TODO: special handling for "(none)";
+	var recipe_name = recipe_node.text();
 	notify("loading recipe", recipe_name);
 
 	var recipe_container = recipe_node.closest("div").
@@ -55,7 +55,18 @@ var loadRecipe = function(ev) {
 	var callback = function(data, status, error) {
 		populateBags(recipe_container, data, status, error);
 	};
-	tw.loadRecipe(recipe_name, callback);
+	if(recipe_name != "(none)") { // XXX: hacky?
+		tw.loadRecipe(recipe_name, callback);
+	} else {
+		var _callback = function(data, status, error) {
+			var recipe = $.map(data, function(item, i) {
+				return [[item, ""]]; // nested array to prevent flattening
+			});
+			data = { recipe: recipe };
+			callback.apply(this, arguments);
+		};
+		tw.loadBags(_callback);
+	}
 	return false;
 };
 
