@@ -113,35 +113,20 @@ var loadBag = function(ev) {
 			return item[0] == "(all)" ? null : [item]; // nested array to prevent flattening
 		});
 		var counter = recipe.length;
-		var results = {};
+		var index = {};
 		var aggregate = function(data, status, error) {
 			for(var i = 0; i < data.length; i++) {
 				var tiddler = data[i];
-				if(!results[tiddler.title]) {
-					results[tiddler.title] = [];
+				if(!index[tiddler.title]) {
+					index[tiddler.title] = [];
 				}
-				results[tiddler.title].push(tiddler);
+				index[tiddler.title].push(tiddler);
 			}
 			if(--counter == 0) {
-				var tiddlers = [];
-				for(var key in results) {
-					var list = results[key];
-					if(list.length > 1) {
-						var tiddler = list.pop();
-						tiddler.class = "primary";
-						tiddlers.push(tiddler);
-						for(i = 0; i < list.length; i++) {
-							tiddler = list[i];
-							tiddler.class = "secondary";
-							tiddlers.push(tiddler);
-						}
-					} else {
-						tiddlers.push(list[0]);
-					}
-				}
+				var tiddlers = resolveCascade(index);
 				callback(tiddlers, status, error);
 			}
-		}
+		};
 		$.each(recipe, function(i, item) {
 			var bag_name = item[0];
 			var filter = item[1];
@@ -160,7 +145,7 @@ var populateTiddlers = function(container, data, status, error) {
 	var sortAttr = "title";
 	listCollection("Tiddlers", data, sortAttr, function(el, item, i) {
 		return el.find("a").text(item.title).
-			addClass(item.class).
+			addClass(item.cascade).
 			data("bag", item.bag).click(loadTiddler).end();
 	}).appendTo(container);
 };
@@ -223,6 +208,30 @@ var setActive = function(node) {
 		parent().find(".indicator").remove().end().end().
 		find("a").append('<span class="indicator">').end().
 		addClass("active");
+};
+
+// translates a collection of tiddlers into an array, flagging duplicates
+// index is an object listing tiddlers by title
+// duplicate tiddlers are assigned a cascade property "primary" or "secondary",
+// depending on their precendence in the cascade
+var resolveCascade = function(index) {
+	var tiddlers = [];
+	for(var key in index) {
+		var list = index[key];
+		if(list.length == 1) {
+			tiddlers.push(list[0]);
+		} else {
+			var tiddler = list.pop();
+			tiddler.cascade = "primary";
+			tiddlers.push(tiddler);
+			for(var i = 0; i < list.length; i++) {
+				tiddler = list[i];
+				tiddler.cascade = "secondary";
+				tiddlers.push(tiddler);
+			}
+		}
+	}
+	return tiddlers;
 };
 
 var notify = function(msg) { // TODO: use jQuery.notify

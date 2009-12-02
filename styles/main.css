@@ -145,6 +145,14 @@ body {
 	background-color: #F4E8B1; /* XXX: dark version: D1C696 */
 }
 
+#tiddlers .primary {
+	font-weight: bold;
+}
+
+#tiddlers .secondary {
+	text-decoration: line-through;
+}
+
 #tiddler .content {
 	background-color: #FFF;
 }
