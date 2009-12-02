@@ -108,8 +108,30 @@ var loadBag = function(ev) {
 		tw.loadTiddlers(container, callback);
 	} else {
 		var recipe = bag_node.closest(".collection").data("recipe");
-		console.log(recipe); // XXX: DEBUG
-		// TODO: get tiddlers for each item in recipe
+		recipe = $.map(recipe, function(item, i) { // clone array to prevent data corruption
+			// ignore dummy item -- XXX: hacky?
+			return item[0] == "(all)" ? null : [item]; // nested array to prevent flattening
+		});
+		var counter = recipe.length;
+		var results = [];
+		var aggregate = function(bag, data, status, error) {
+			results = results.concat(data); // TODO: mark duplicate tiddlers
+			if(--counter == 0) {
+				callback(results, status, error);
+			}
+		}
+		$.each(recipe, function(i, item) {
+			var bag_name = item[0];
+			var filter = item[1];
+			var _callback = function(data, status, error) {
+				aggregate(bag_name, data, status, error);
+			};
+			var container = {
+				type: "bag",
+				name: bag_name
+			};
+			tw.loadTiddlers(container, _callback); // TODO: filter support
+		});
 	}
 	return false;
 };
