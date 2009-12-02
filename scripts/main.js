@@ -114,8 +114,11 @@ var loadBag = function(ev) {
 		});
 		var counter = recipe.length;
 		var results = [];
-		var aggregate = function(bag, data, status, error) {
-			results = results.concat(data); // TODO: mark duplicate tiddlers
+		var aggregate = function(data, status, error) {
+			if(data.length) {
+				var bag = data[0].bag; // XXX: unused
+				results = results.concat(data); // TODO: mark duplicate tiddlers
+			}
 			if(--counter == 0) {
 				callback(results, status, error);
 			}
@@ -123,14 +126,11 @@ var loadBag = function(ev) {
 		$.each(recipe, function(i, item) {
 			var bag_name = item[0];
 			var filter = item[1];
-			var _callback = function(data, status, error) {
-				aggregate(bag_name, data, status, error);
-			};
 			var container = {
 				type: "bag",
 				name: bag_name
 			};
-			tw.loadTiddlers(container, filter, _callback);
+			tw.loadTiddlers(container, filter, aggregate);
 		});
 	}
 	return false;
