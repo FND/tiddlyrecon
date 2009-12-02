@@ -113,14 +113,33 @@ var loadBag = function(ev) {
 			return item[0] == "(all)" ? null : [item]; // nested array to prevent flattening
 		});
 		var counter = recipe.length;
-		var results = [];
+		var results = {};
 		var aggregate = function(data, status, error) {
-			if(data.length) {
-				var bag = data[0].bag; // XXX: unused
-				results = results.concat(data); // TODO: mark duplicate tiddlers
+			for(var i = 0; i < data.length; i++) {
+				var tiddler = data[i];
+				if(!results[tiddler.title]) {
+					results[tiddler.title] = [];
+				}
+				results[tiddler.title].push(tiddler);
 			}
 			if(--counter == 0) {
-				callback(results, status, error);
+				var tiddlers = [];
+				for(var key in results) {
+					var list = results[key];
+					if(list.length > 1) {
+						var tiddler = list.pop();
+						tiddler.class = "primary";
+						tiddlers.push(tiddler);
+						for(i = 0; i < list.length; i++) {
+							tiddler = list[i];
+							tiddler.class = "secondary";
+							tiddlers.push(tiddler);
+						}
+					} else {
+						tiddlers.push(list[0]);
+					}
+				}
+				callback(tiddlers, status, error);
 			}
 		}
 		$.each(recipe, function(i, item) {
@@ -140,7 +159,9 @@ var populateTiddlers = function(container, data, status, error) {
 	notify("populating tiddlers");
 	var sortAttr = "title";
 	listCollection("Tiddlers", data, sortAttr, function(el, item, i) {
-		return el.find("a").text(item.title).data("bag", item.bag).click(loadTiddler).end();
+		return el.find("a").text(item.title).
+			addClass(item.class).
+			data("bag", item.bag).click(loadTiddler).end();
 	}).appendTo(container);
 };
 
