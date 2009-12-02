@@ -105,7 +105,7 @@ var loadBag = function(ev) {
 			type: "bag",
 			name: bag_name
 		};
-		tw.loadTiddlers(container, callback);
+		tw.loadTiddlers(container, null, callback);
 	} else {
 		var recipe = bag_node.closest(".collection").data("recipe");
 		recipe = $.map(recipe, function(item, i) { // clone array to prevent data corruption
@@ -130,7 +130,7 @@ var loadBag = function(ev) {
 				type: "bag",
 				name: bag_name
 			};
-			tw.loadTiddlers(container, _callback); // TODO: filter support
+			tw.loadTiddlers(container, filter, _callback);
 		});
 	}
 	return false;
