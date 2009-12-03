@@ -34,7 +34,10 @@ var loadStatus = function() {
 var populateRecipes = function(container, data, status, error) {
 	notify("populating recipes");
 	data.splice(0, 0, "(none)");
-	listCollection("Recipes", data, null, function(el, item, i) {
+	var options = {
+		title: "Recipes"
+	};
+	listCollection(data, options, function(el, item, i) {
 		return el.addClass(i == 0 ? "virtual" : null).
 			find("a").text(item).click(loadRecipe).end();
 	}).appendTo(container);
@@ -75,8 +78,11 @@ var loadRecipe = function(ev) {
 var populateBags = function(container, data, status, error) {
 	notify("populating bags");
 	data.recipe.splice(0, 0, ["(all)", ""]);
-	var sortAttr = 0;
-	listCollection("Bags", data.recipe, sortAttr, function(el, item, i) {
+	var options = {
+		title: "Bags",
+		sortAttr: 0
+	};
+	listCollection(data.recipe, options, function(el, item, i) {
 		var bag = item[0];
 		var filter = item[1] || "";
 		return el.addClass(i == 0 ? "virtual" : null).
@@ -112,6 +118,7 @@ var loadBag = function(ev) {
 			// ignore dummy item -- XXX: hacky?
 			return item[0] == "(all)" ? null : [item]; // nested array to prevent flattening
 		});
+		// TODO: refactor aggregation queue into separation function
 		var counter = recipe.length;
 		var index = {};
 		var aggregate = function(data, status, error) {
@@ -142,8 +149,11 @@ var loadBag = function(ev) {
 
 var populateTiddlers = function(container, data, status, error) {
 	notify("populating tiddlers");
-	var sortAttr = "title";
-	listCollection("Tiddlers", data, sortAttr, function(el, item, i) {
+	var options = {
+		title: "Tiddlers",
+		sortAttr: "title"
+	};
+	listCollection(data, options, function(el, item, i) {
 		return el.find("a").text(item.title).
 			addClass(item.cascade).
 			data("bag", item.bag).click(loadTiddler).end();
@@ -182,11 +192,13 @@ var populateTiddler = function(container, data, status, error) {
 // utility functions
 
 // creates a list of collection items
-// title is used as heading and also as element ID (lowercased)
 // items is the collection's data array
-// sortAttr is an optional attribute by which items are to be sorted
+// options.title is used as heading and also as element ID (lowercased)
+// options.sortAttr is the attribute by which items are to be sorted
 // callback is a function to customize each item's DOM element
-var listCollection = function(title, items, sortAttr, callback) {
+var listCollection = function(items, options, callback) {
+	var title = options.title || "";
+	var sortAttr = options.sortAttr !== undefined ? options.sortAttr : null;
 	items = items.sort(function(a, b) {
 		var x = sortAttr !== null ? a[sortAttr].toLowerCase() : a.toLowerCase();
 		var y = sortAttr !== null ? b[sortAttr].toLowerCase() : b.toLowerCase();
