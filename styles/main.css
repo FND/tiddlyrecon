@@ -74,6 +74,7 @@ body {
 
 .listing {
 	float: left;
+	max-width: 50%; /* XXX: not cross-browser compatible */
 	margin: 1px -1px 10px 10px; /* top margin compensates for childrends' negative margin */
 	list-style-type: none;
 }
