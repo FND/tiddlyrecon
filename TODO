@@ -1,4 +1,4 @@
-* error handling (AJAX operations - also: binary tiddlers)
+* error handling (AJAX operations)
 * avoid IDs
 * loading indicator
 * integrate jQuery.notify

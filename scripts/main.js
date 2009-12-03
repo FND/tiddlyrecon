@@ -192,7 +192,7 @@ var listCollection = function(title, items, sortAttr, callback) {
 		var y = sortAttr !== null ? b[sortAttr].toLowerCase() : b.toLowerCase();
 		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	}); // XXX: does not take into account special items ("(none)", "(all)")
-	return $('<div class="collection container" />').
+	return $('<div class="collection" />').
 		attr("id", title.toLowerCase()). // XXX: inappropriate?
 		attach("<h2 />").text(title).end().
 		attach('<ul class="listing" />').
