@@ -78,9 +78,16 @@ var loadRecipe = function(ev) {
 var populateBags = function(container, data, status, error) {
 	notify("populating bags");
 	data.recipe.splice(0, 0, ["(all)", ""]);
+	var toolbar = $('<div class="toolbar" />').
+		attach('<a class="button" href="#" />').text("New").
+			click(function(ev) {
+				var name = prompt("enter name:");
+				tw.saveBag(name, {});
+			}).end();
 	var options = {
 		title: "Bags",
-		sortAttr: 0
+		sortKey: 0,
+		toolbar: toolbar
 	};
 	listCollection(data.recipe, options, function(el, item, i) {
 		var bag = item[0];
@@ -151,7 +158,7 @@ var populateTiddlers = function(container, data, status, error) {
 	notify("populating tiddlers");
 	var options = {
 		title: "Tiddlers",
-		sortAttr: "title"
+		sortKey: "title"
 	};
 	listCollection(data, options, function(el, item, i) {
 		return el.find("a").text(item.title).
@@ -194,24 +201,26 @@ var populateTiddler = function(container, data, status, error) {
 // creates a list of collection items
 // items is the collection's data array
 // options.title is used as heading and also as element ID (lowercased)
-// options.sortAttr is the attribute by which items are to be sorted
+// options.sortKey is the attribute by which items are to be sorted
 // callback is a function to customize each item's DOM element
 var listCollection = function(items, options, callback) {
 	var title = options.title || "";
-	var sortAttr = options.sortAttr !== undefined ? options.sortAttr : null;
+	var sortKey = options.sortKey !== undefined ? options.sortKey : null;
 	items = items.sort(function(a, b) {
-		var x = sortAttr !== null ? a[sortAttr].toLowerCase() : a.toLowerCase();
-		var y = sortAttr !== null ? b[sortAttr].toLowerCase() : b.toLowerCase();
+		var x = sortKey !== null ? a[sortKey].toLowerCase() : a.toLowerCase();
+		var y = sortKey !== null ? b[sortKey].toLowerCase() : b.toLowerCase();
 		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	}); // XXX: does not take into account special items ("(none)", "(all)")
-	return $('<div class="collection" />').
+	var el = $('<div class="collection" />').
 		attr("id", title.toLowerCase()). // XXX: inappropriate?
+		append(options.toolbar).
 		attach("<h2 />").text(title).end().
 		attach('<ul class="listing" />').
 			append($.map(items, function(item, i) {
 				var el = $("<li />").append('<a href="#" />');
 				return callback(el, item, i)[0];
 			})).end();
+	return el;
 };
 
 var setActive = function(node) {
