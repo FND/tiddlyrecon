@@ -75,7 +75,7 @@ body {
 .listing {
 	float: left;
 	max-width: 50%; /* XXX: not cross-browser compatible */
-	margin: 1px -1px 10px 10px; /* top margin compensates for childrends' negative margin */
+	margin: 1px -1px 10px 10px; /* top margin compensates for children's' negative margin */
 	list-style-type: none;
 }
 
@@ -108,7 +108,7 @@ body {
 	right: 0;
 	width: 0;
 	height: 0;
-	border-width: 0.5em 0 0.5em 0.5em; /* XXX: inacurrate; does not scale!? */
+	border-width: 0.5em 0 0.5em 0.5em; /* XXX: inaccurate; does not scale!? */
 	border-style: solid;
 	border-color: transparent transparent transparent #FFF;
 }

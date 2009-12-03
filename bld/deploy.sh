@@ -10,9 +10,11 @@ if [ ! -d bld ]; then # XXX: unnecessary!?
 	exit 1
 fi
 
-cd `dirname $0`
+bld/package.sh && \
+cd `dirname $0` && \
 scp TiddlyRecon.zip $host:~/tmp/ && \
 ssh $host "sudo rm -rf $base_dir/TiddlyRecon ~/tmp/TiddlyRecon; " \
 	"cd ~/tmp && unzip -d TiddlyRecon TiddlyRecon.zip && " \
 	"sudo mv TiddlyRecon $base_dir/ && " \
-	"echo 'tiddlyweb.host = \"/wiki\";' > $base_dir/TiddlyRecon/scripts/config.js"
+	"echo 'tiddlyweb.host = \"/wiki\";' > $base_dir/TiddlyRecon/scripts/config.js" && \
+echo "deployed to http://$host/TiddlyRecon/"
