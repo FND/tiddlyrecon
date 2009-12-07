@@ -81,8 +81,7 @@ var populateBags = function(container, data, status, error) {
 	var toolbar = $('<div class="toolbar" />').
 		attach('<a class="button" href="#" />').text("New").
 			click(function(ev) {
-				var name = prompt("enter name:");
-				tw.saveBag(name, {});
+				$.TiddlyRecon.widgets.newBag();
 			}).end();
 	var options = {
 		title: "Bags",

@@ -8,6 +8,7 @@
 * edit functionality (creating recipes/bags/tiddlers, modifying policies)
 * visualize recipe cascade (highlighting duplicate tiddlers)
 * retain list of visited entities, style accordingly
+* on-demand loading of widget functionality (CSS, jQuery UI)
 
 * wikify tiddler contents in TiddlyWiki macro
-* include styles
+* include styles as tiddler section
