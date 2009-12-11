@@ -4,6 +4,9 @@
 #
 # Usage:
 #   $ ./twmacro.sh [min]
+#
+# TODO:
+# * use string concatenation instead of multiple write operations
 
 outfile="bld/TiddlyRecon.js"
 minfile="bld/TiddlyRecon.min.js"
@@ -21,19 +24,30 @@ echo "//}}}" | \
 	cat bld/resources/twmacro_template.js scripts/chrjs/main.js \
 		scripts/main.js scripts/config.js scripts/twmacro.js - \
 	> $outfile
+
+styles=$(cat styles/main.css | sed -e "s/\s*\/\*.*\*\///g") # strip CSS comments (break TiddlyWiki formatter)
+styles="/***
+!StyleSheet
+$styles
+!/StyleSheet
+***/"
+
+echo "$styles" >> $outfile
+
 echo "created $outfile"
 
 if [ "$minify" = "min" ]; then
 	# based on http://github.com/FND/misc/blob/master/jsmin.sh
 	startpattern="\/\*"
 	endpattern="\*\/"
-	header=`cat $outfile \
+	header=$(cat $outfile \
 		| sed -e "/$endpattern/q" \
-		| sed -n "/^$startpattern/,/$endpattern/ p"`
+		| sed -n "/^$startpattern/,/$endpattern/ p")
 	echo "$header
 //{{{" > $minfile
 	java -jar bld/yuicompressor-*.jar $outfile >> $minfile
 	echo "
-//}}}" >> $minfile # TODO: use string concatenation instead of multiple write operations
+//}}}" >> $minfile
+	echo "$styles" >> $minfile
 	echo "created $minfile"
 fi

@@ -13,3 +13,5 @@
 !Code
 ***/
 //{{{
+setStylesheet(store.getTiddlerText(tiddler.title + "##StyleSheet"));
+
