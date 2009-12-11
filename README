@@ -10,6 +10,7 @@ Dependencies
 TiddlyRecon requires both jQuery and chrjs:
     http://jquery.com
     http://github.com/tiddlyweb/chrjs
+    http://code.google.com/p/jquery-json/ (for chrjs)
 The bld/init.sh script automatically downloads these external dependencies.
 
 In addition, YUICompressor is used for minification (optional):
