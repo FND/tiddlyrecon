@@ -47,7 +47,7 @@ if [ "$minify" = "min" ]; then
 //{{{" > $minfile
 	java -jar bld/yuicompressor-*.jar $outfile >> $minfile
 	echo "
-//}}}" >> $minfile
-	echo "$styles" >> $minfile
+//}}}
+$styles" >> $minfile
 	echo "created $minfile"
 fi
