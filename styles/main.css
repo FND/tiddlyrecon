@@ -93,13 +93,13 @@ body {
 
 .listing a:hover,
 .listing .active a {
-	position: relative;  /* common stacking context with entities */
+	position: relative; /* common stacking context with entities */
 	z-index: 30;
 	outline: none; /* suppresses active/focus state borders */
 }
 
 .listing .active a {
-	position: relative;  /* required for child's abspos */
+	position: relative; /* required for child's abspos */
 	border-right: none;
 }
 
