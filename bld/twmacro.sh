@@ -22,7 +22,7 @@ bld/init.sh
 
 echo "//}}}" | \
 	cat bld/resources/twmacro_template.js scripts/chrjs/main.js \
-		scripts/main.js scripts/config.js scripts/twmacro.js - \
+		scripts/main.js scripts/util.js scripts/config.js scripts/twmacro.js - \
 	> $outfile
 
 styles=$(cat styles/main.css | sed -e "s/\s*\/\*.*\*\///g") # strip CSS comments (break TiddlyWiki formatter)

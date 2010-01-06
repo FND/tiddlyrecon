@@ -253,11 +253,4 @@ var notify = function(msg) { // TODO: use jQuery.notify
 	}
 };
 
-// utility method to create and then select elements
-// in combination with jQuery's end method, this is generally useful for
-// dynamically generating nested elements within a chain of operations
-$.fn.attach = function(html) { // TODO: move into separate module
-	return this.append(html).children(":last");
-};
-
 })();
