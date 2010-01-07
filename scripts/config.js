@@ -1,1 +1,1 @@
-tiddlyweb.host = "http://tiddlyweb.peermore.com/wiki";
+TiddlyWeb.host = "http://tiddlyweb.peermore.com/wiki"; // XXX: use of class attribute hacky

@@ -1,13 +1,13 @@
 (function() {
 
 var $ = jQuery;
-var tw = tiddlyweb; // TODO: chrjs should provide an instance
+var tw = new TiddlyWeb();
 
 $.TiddlyRecon = function(root, host) {
-	tw.host = host;
-	$.TiddlyRecon.root = $(root).empty(); // XXX: singleton, bad
+	tw.host = host; // XXX: hacky; should happen at instantiation!?
+	$.TiddlyRecon.root = $(root).empty(); // TODO: TiddlyRecon should be a constructor
 	notify("loading status");
-	loadStatus();
+	loadStatus($.TiddlyRecon.root);
 	notify("loading recipes");
 	tw.loadRecipes(function(data, status, error) {
 		populateRecipes($.TiddlyRecon.root, data, status, error);
@@ -15,8 +15,8 @@ $.TiddlyRecon = function(root, host) {
 };
 
 // display status
-var loadStatus = function() {
-	var placeholder = $('<div />').appendTo($.TiddlyRecon.root); // required to avoid race condition
+var loadStatus = function(container) {
+	var placeholder = $('<div />').appendTo(container); // required to avoid race condition
 	var callback = function(data, status, error) {
 		var ctx = {
 			host: tw.host,
