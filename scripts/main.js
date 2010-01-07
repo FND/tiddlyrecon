@@ -1,6 +1,5 @@
-(function() {
+(function($) {
 
-var $ = jQuery;
 var tw = new TiddlyWeb();
 
 $.TiddlyRecon = function(root, host) {
@@ -253,4 +252,4 @@ var notify = function(msg) { // TODO: use jQuery.notify
 	}
 };
 
-})();
+})(jQuery);
