@@ -1,11 +1,11 @@
 (function() {
 
 var $ = jQuery;
-var tw = tiddlyweb; // TODO: chrjs should provide an instance
+var tw = new TiddlyWeb();
 
 $.TiddlyRecon = function(root, host) {
-	tw.host = host;
-	$.TiddlyRecon.root = $(root).empty(); // XXX: singleton, bad
+	tw.host = host; // XXX: hacky; should happen at instantiation!?
+	$.TiddlyRecon.root = $(root).empty(); // TODO: TiddlyRecon should be a constructor
 	notify("loading status");
 	loadStatus();
 	notify("loading recipes");
