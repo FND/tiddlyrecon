@@ -1,3 +1,4 @@
 scripts/jquery.min.js
 scripts/jquery-json.min.js
+scripts/util.js
 bld/yuicompressor*.jar
