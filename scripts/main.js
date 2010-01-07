@@ -7,7 +7,7 @@ $.TiddlyRecon = function(root, host) {
 	tw.host = host; // XXX: hacky; should happen at instantiation!?
 	$.TiddlyRecon.root = $(root).empty(); // TODO: TiddlyRecon should be a constructor
 	notify("loading status");
-	loadStatus();
+	loadStatus($.TiddlyRecon.root);
 	notify("loading recipes");
 	tw.loadRecipes(function(data, status, error) {
 		populateRecipes($.TiddlyRecon.root, data, status, error);
@@ -15,8 +15,8 @@ $.TiddlyRecon = function(root, host) {
 };
 
 // display status
-var loadStatus = function() {
-	var container = $('<dl id="status" />').hide().appendTo($.TiddlyRecon.root);
+var loadStatus = function(container) {
+	container = $('<dl id="status" />').hide().appendTo(container);
 	var populateStatus = function(data, status, error) {
 		container.
 			append("<dt>user</dt>\n").
