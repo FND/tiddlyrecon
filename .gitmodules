@@ -1,3 +1,0 @@
-[submodule "scripts/chrjs"]
-	path = scripts/chrjs
-	url = git://github.com/tiddlyweb/chrjs.git
