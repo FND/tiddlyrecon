@@ -1,5 +1,6 @@
-scripts/jquery.min.js
-scripts/jquery-json.min.js
-scripts/chrjs.js
-scripts/util.js
-bld/yuicompressor*.jar
+src/scripts/jquery.min.js
+src/scripts/jquery-json.min.js
+src/scripts/chrjs.js
+src/scripts/util.js
+src/bld/yuicompressor*.jar
+*.pyc
