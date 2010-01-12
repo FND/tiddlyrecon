@@ -26,4 +26,4 @@ def redirect(environ, start_response):
 	from tiddlyweb.web.http import HTTP302
 	from tiddlyweb.web.util import server_base_url
 
-	raise HTTP303(server_base_url(environ) + "/console/")
+	raise HTTP302(server_base_url(environ) + "/console/")
