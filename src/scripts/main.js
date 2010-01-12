@@ -15,18 +15,15 @@ $.TiddlyRecon = function(root, host) {
 
 // display status
 var loadStatus = function(container) {
-	container = $('<dl id="status" />').hide().appendTo(container);
-	var populateStatus = function(data, status, error) {
-		container.
-			append("<dt>user</dt>\n").
-			attach("<dd />\n").text(data.username).end().
-			append("<dt>server</dt>\n").
-			attach("<dd />\n").
-				attach("<a />").attr("href", tw.host).text(tw.host).end().
-				end().
-			show();
+	var placeholder = $('<div />').appendTo(container); // required to avoid race condition
+	var callback = function(data, status, error) {
+		var ctx = {
+			host: tw.host,
+			username: data.username
+		}
+		$("#template_status").template(ctx).replaceAll(placeholder);
 	};
-	tw.loadData("/status", populateStatus);
+	tw.loadData("/status", callback);
 };
 
 // list recipes

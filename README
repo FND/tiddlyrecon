@@ -13,7 +13,6 @@ TiddlyRecon requires jQuery, chrjs and some jQuery utility methods:
     http://jquery.com
     http://github.com/tiddlyweb/chrjs
     http://github.com/FND/jquery/raw/master/util.js
-The bld/init.sh script automatically downloads these external dependencies.
 
 In addition, YUICompressor is used for minification (optional):
     http://yuilibrary.com/projects/yuicompressor

@@ -1,0 +1,2 @@
+include README Makefile
+recursive-include tiddlywebplugins/console/resources *

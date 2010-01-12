@@ -12,12 +12,29 @@
 		<i>loading...</i>
 	</div>
 
+	<!-- templates -->
+
+	<script type="text/html" id="template_status">
+		<dl id="status">
+			<dt>user</dt>
+			<dd> <%= username %> </dd>
+			<dt>server</dt>
+			<dd>
+				<a href="<%= host %>">
+					<%= host %>
+				</a>
+			</dd>
+		</dl>
+	</script>
+
+	<!-- functionality -->
+
 	<script src="scripts/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		jQuery.noConflict();
 	</script>
 	<script src="scripts/jquery-json.min.js" type="text/javascript"></script>
-	<script src="scripts/chrjs/main.js" type="text/javascript"></script>
+	<script src="scripts/chrjs.js" type="text/javascript"></script>
 	<script src="scripts/main.js" type="text/javascript"></script>
 	<script src="scripts/util.js" type="text/javascript"></script>
 	<script src="scripts/config.js" type="text/javascript"></script>
