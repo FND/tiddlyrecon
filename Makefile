@@ -11,7 +11,17 @@ clean:
 	rm -r src/tiddlers || true
 	rm -r tiddlywebplugins/console/resources || true
 
-remotes:
+jslib:
+	curl -o "src/scripts/jquery.min.js" \
+		"http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"
+	curl -o "src/scripts/jquery-json.min.js" \
+		"http://jquery-json.googlecode.com/files/jquery.json-2.2.min.js"
+	curl -o "src/scripts/chrjs.js" \
+		"http://github.com/tiddlyweb/chrjs/raw/master/main.js"
+	curl -o "src/scripts/util.js" \
+		"http://github.com/FND/jquery/raw/master/util.js"
+
+remotes: jslib
 	./cacher
 
 dist: remotes
