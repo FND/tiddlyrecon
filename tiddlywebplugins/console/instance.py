@@ -15,7 +15,7 @@ def _store_contents(sources):
 
 
 instance_config = {
-	"system_plugins": ["tiddlywebplugins.console"],
+	"system_plugins": ["tiddlywebplugins.status", "tiddlywebplugins.console"]
 }
 
 sources = {
