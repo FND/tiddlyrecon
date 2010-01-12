@@ -1,4 +1,4 @@
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 APP_BAG = "console"
 
@@ -7,6 +7,7 @@ def init(config):
 	from tiddlywebplugins.utils import map_to_tiddler
 
 	if config.get("selector"): # system plugin
+		config["selector"].add("/console", GET=redirect) # XXX: temporary workaround (see below)
 		config["selector"].add("/console/", GET=get_root) # XXX: trailing slash required for relative paths!? -- TODO: use HTML BASE tag
 		map_to_tiddler(config["selector"],
 			"/console/{path}/{tiddler_name:segment}",
@@ -19,3 +20,10 @@ def get_root(environ, start_response): # XXX: "root" inappropriate!?
 	environ["wsgiorg.routing_args"][1]["bag_name"] = APP_BAG
 	environ["wsgiorg.routing_args"][1]["tiddler_name"] = "index.html"
 	return get_tiddler(environ, start_response)
+
+
+def redirect(environ, start_response):
+	from tiddlyweb.web.http import HTTP302
+	from tiddlyweb.web.util import server_base_url
+
+	raise HTTP303(server_base_url(environ) + "/console/")
