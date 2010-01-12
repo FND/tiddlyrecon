@@ -22,7 +22,12 @@ setup(
 	packages = find_packages(exclude="test"),
 	author_email = AUTHOR_EMAIL,
 	platforms = "Posix; MacOS X; Windows",
-	install_requires = ["setuptools", "tiddlyweb", "tiddlywebplugins.instancer"],
+	install_requires = [
+		"setuptools",
+		"tiddlyweb",
+		"tiddlywebplugins.instancer",
+		"tiddlywebplugins.status"
+	],
 	include_package_data = True,
 	zip_safe = False
 )
