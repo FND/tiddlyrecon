@@ -8,6 +8,7 @@ clean:
 	rm -r dist || true
 	rm -r build || true
 	rm -r *.egg-info || true
+	rm -r src/tiddlers || true
 	rm -r tiddlywebplugins/console/resources || true
 
 remotes:

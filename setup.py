@@ -20,7 +20,6 @@ setup(
 	author = AUTHOR,
 	url = "http://pypi.python.org/pypi/%s" % NAME,
 	packages = find_packages(exclude="test"),
-	#scripts = ["trecon"],
 	author_email = AUTHOR_EMAIL,
 	platforms = "Posix; MacOS X; Windows",
 	install_requires = ["setuptools", "tiddlyweb", "tiddlywebplugins.instancer"],
