@@ -5,4 +5,3 @@ tiddler: scripts/jquery-json.min.js
 tiddler: scripts/chrjs.js
 tiddler: scripts/main.js
 tiddler: scripts/util.js
-tiddler: scripts/config.js
