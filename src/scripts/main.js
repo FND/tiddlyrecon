@@ -157,10 +157,7 @@ var loadTiddler = function(ev) {
 	var bag = tiddler_node.data("bag");
 	notify("loading tiddler", title, bag);
 
-	var tiddler_container = tiddler_node.closest("div").
-		find("#tiddler").remove().end(). // clear existing selection -- TODO: allow for multiple bags?
-		attach('<div id="tiddler" class="entity" />').
-			attach("<h3 />").text(title).end();
+	var tiddler_container = renderEntity("tiddler", title, tiddler_node);
 
 	var callback = function(data, status, error) {
 		populateTiddler(tiddler_container, data, status, error);
