@@ -20,7 +20,7 @@ var loadStatus = function(container) {
 		var ctx = {
 			host: tw.host,
 			username: data.username
-		}
+		};
 		$("#template_status").template(ctx).replaceAll(placeholder);
 	};
 	tw.loadData("/status", callback);
@@ -47,10 +47,7 @@ var loadRecipe = function(ev) {
 	recipe_name = recipe_name == "(none)" ? null : recipe_name; // XXX: hacky?
 	notify("loading recipe", recipe_name);
 
-	var recipe_container = recipe_node.closest("div").
-		find("#recipe").remove().end(). // clear existing selection -- TODO: allow for multiple recipes?
-		attach('<div id="recipe" class="entity" />').
-			attach("<h3 />").text(recipe_name || "").end();
+	var recipe_container = renderEntity("recipe", recipe_name || "", recipe_node);
 
 	var callback = function(data, status, error) {
 		populateBags(recipe_container, data, status, error);
@@ -94,10 +91,7 @@ var loadBag = function(ev) {
 	bag_name = bag_name == "(all)" ? null : bag_name; // XXX: hacky?
 	notify("loading bag", bag_name);
 
-	var bag_container = bag_node.closest("div").
-		find("#bag").remove().end(). // clear existing selection -- TODO: allow for multiple bags?
-		attach('<div id="bag" class="entity" />').
-			attach("<h3 />").text(bag_name || "").end();
+	var bag_container = renderEntity("bag", bag_name || "", bag_node);
 
 	var callback = function(data, status, error) {
 		populateTiddlers(bag_container, data, status, error);
@@ -186,6 +180,15 @@ var populateTiddler = function(container, data, status, error) {
 };
 
 // utility functions
+
+// creates an entity (bag or recipe)
+var renderEntity = function(type, name, container) {
+	var entity = $("#template_entity").
+		template({ name: name }).attr("id", type);
+	return container.closest("div").
+		find("#" + type).remove().end(). // clear existing selection -- TODO: allow for multiple entities?
+		attach(entity);
+};
 
 // creates a list of collection items
 // items is the collection's data array
