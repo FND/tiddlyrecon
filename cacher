@@ -7,6 +7,8 @@ creates local cache of instance tiddlers to be included in distribution
 import sys
 import os
 
+import mangler
+
 from tiddlyweb.util import read_utf8_file, write_utf8_file, std_error_message
 from tiddlywebplugins.instancer.util import cache_tiddlers, _expand_recipe
 from tiddlywebplugins.console.instance import sources as store_sources

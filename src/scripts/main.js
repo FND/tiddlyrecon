@@ -20,7 +20,7 @@ var loadStatus = function(container) {
 		var ctx = {
 			host: tw.host,
 			username: data.username
-		}
+		};
 		$("#template_status").template(ctx).replaceAll(placeholder);
 	};
 	tw.loadData("/status", callback);
@@ -30,27 +30,21 @@ var loadStatus = function(container) {
 var populateRecipes = function(container, data, status, error) {
 	notify("populating recipes");
 	data.splice(0, 0, "(none)");
-	var options = {
-		title: "Recipes"
-	};
-	listCollection(data, options, function(el, item, i) {
-		return el.addClass(i == 0 ? "virtual" : null).
-			find("a").text(item).click(loadRecipe).end();
-	}).appendTo(container);
+	listCollection(data, { title: "Recipes" }).
+		find("li:first").addClass("virtual").end().
+		find("a").click(loadRecipe).end().
+		appendTo(container);
 };
 
 // display recipe
 var loadRecipe = function(ev) {
 	var recipe_node = $(this);
 	setActive(recipe_node);
-	var recipe_name = recipe_node.text();
+	var recipe_name = recipe_node.text().trim();
 	recipe_name = recipe_name == "(none)" ? null : recipe_name; // XXX: hacky?
 	notify("loading recipe", recipe_name);
 
-	var recipe_container = recipe_node.closest("div").
-		find("#recipe").remove().end(). // clear existing selection -- TODO: allow for multiple recipes?
-		attach('<div id="recipe" class="entity" />').
-			attach("<h3 />").text(recipe_name || "").end();
+	var recipe_container = renderEntity("recipe", recipe_name || "", recipe_node);
 
 	var callback = function(data, status, error) {
 		populateBags(recipe_container, data, status, error);
@@ -76,28 +70,27 @@ var populateBags = function(container, data, status, error) {
 	data.recipe.splice(0, 0, ["(all)", ""]);
 	var options = {
 		title: "Bags",
-		sortAttr: 0
+		sortAttr: 0,
+		callback: function(i, el, items) {
+			$(el).find("a").data("filter", items[i][1]).click(loadBag);
+		},
 	};
-	listCollection(data.recipe, options, function(el, item, i) {
-		var bag = item[0];
-		var filter = item[1] || "";
-		return el.addClass(i == 0 ? "virtual" : null).
-			find("a").text(bag).data("filter", filter).click(loadBag).end();
-	}).data("recipe", data.recipe).appendTo(container);
+	listCollection(data.recipe, options).
+		find("li:first").addClass("virtual").end().
+		find("a").click(loadBag).end().
+		data("recipe", data.recipe).
+		appendTo(container);
 };
 
 // display bag
 var loadBag = function(ev) {
 	var bag_node = $(this);
 	setActive(bag_node);
-	var bag_name = bag_node.text(); // TODO: special handling for "(all)";
+	var bag_name = bag_node.text().trim();
 	bag_name = bag_name == "(all)" ? null : bag_name; // XXX: hacky?
 	notify("loading bag", bag_name);
 
-	var bag_container = bag_node.closest("div").
-		find("#bag").remove().end(). // clear existing selection -- TODO: allow for multiple bags?
-		attach('<div id="bag" class="entity" />').
-			attach("<h3 />").text(bag_name || "").end();
+	var bag_container = renderEntity("bag", bag_name || "", bag_node);
 
 	var callback = function(data, status, error) {
 		populateTiddlers(bag_container, data, status, error);
@@ -147,26 +140,25 @@ var populateTiddlers = function(container, data, status, error) {
 	notify("populating tiddlers");
 	var options = {
 		title: "Tiddlers",
-		sortAttr: "title"
+		sortAttr: "title",
+		callback: function(i, el, items) {
+			var item = items[i];
+			$(el).find("a").addClass(item.cascade).data("bag", item.bag);
+		}
 	};
-	listCollection(data, options, function(el, item, i) {
-		return el.find("a").text(item.title).
-			addClass(item.cascade).
-			data("bag", item.bag).click(loadTiddler).end();
-	}).appendTo(container);
+	listCollection(data, options).
+		find("a").click(loadTiddler).end().
+		appendTo(container);
 };
 
 var loadTiddler = function(ev) {
 	var tiddler_node = $(this);
 	setActive(tiddler_node);
-	var title = tiddler_node.text();
+	var title = tiddler_node.text().trim();
 	var bag = tiddler_node.data("bag");
 	notify("loading tiddler", title, bag);
 
-	var tiddler_container = tiddler_node.closest("div").
-		find("#tiddler").remove().end(). // clear existing selection -- TODO: allow for multiple bags?
-		attach('<div id="tiddler" class="entity" />').
-			attach("<h3 />").text(title).end();
+	var tiddler_container = renderEntity("tiddler", title, tiddler_node);
 
 	var callback = function(data, status, error) {
 		populateTiddler(tiddler_container, data, status, error);
@@ -187,27 +179,45 @@ var populateTiddler = function(container, data, status, error) {
 
 // utility functions
 
+// creates an entity (bag or recipe)
+var renderEntity = function(type, name, container) {
+	var entity = $("#template_entity").
+		template({ name: name }).attr("id", type);
+	return container.closest("div").
+		find("#" + type).remove().end(). // clear existing selection -- TODO: allow for multiple entities?
+		attach(entity);
+};
+
 // creates a list of collection items
 // items is the collection's data array
 // options.title is used as heading and also as element ID (lowercased)
 // options.sortAttr is the attribute by which items are to be sorted
-// callback is a function to customize each item's DOM element
-var listCollection = function(items, options, callback) {
-	var title = options.title || "";
+// options.callback is a function applied to each item's DOM element
+var listCollection = function(data, options) {
 	var sortAttr = options.sortAttr !== undefined ? options.sortAttr : null;
-	items = items.sort(function(a, b) {
+	data = data.sort(function(a, b) {
 		var x = sortAttr !== null ? a[sortAttr].toLowerCase() : a.toLowerCase();
 		var y = sortAttr !== null ? b[sortAttr].toLowerCase() : b.toLowerCase();
 		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	}); // XXX: does not take into account special items ("(none)", "(all)")
-	return $('<div class="collection" />').
-		attr("id", title.toLowerCase()). // XXX: inappropriate?
-		attach("<h2 />").text(title).end().
-		attach('<ul class="listing" />').
-			append($.map(items, function(item, i) {
-				var el = $("<li />").append('<a href="#" />');
-				return callback(el, item, i)[0];
-			})).end();
+	if(sortAttr !== null) {
+		var items = $.map(data, function(item, i) { return item[sortAttr]; });
+	} else {
+		items = data;
+	}
+
+	var ctx = {
+		id: options.title.toLowerCase() || "", // XXX: title inappropriate?
+		title: options.title || "",
+		items: items
+	};
+	var container = $("#template_collection").template(ctx);
+	if(options.callback) { // XXX: not really a callback
+		container.find("li").each(function(i, el) {
+			options.callback(i, el, data);
+		});
+	}
+	return container;
 };
 
 var setActive = function(node) {
