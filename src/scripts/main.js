@@ -71,7 +71,6 @@ var populateBags = function(container, data, status, error) {
 	var options = {
 		title: "Bags",
 		sortAttr: 0,
-		mapping: function(item, i) { return item[0]; },
 		callback: function(i, el, items) {
 			$(el).find("a").data("filter", items[i][1]).click(loadBag);
 		},
@@ -142,7 +141,6 @@ var populateTiddlers = function(container, data, status, error) {
 	var options = {
 		title: "Tiddlers",
 		sortAttr: "title",
-		mapping: function(item, i) { return item.title; },
 		callback: function(i, el, items) {
 			var item = items[i];
 			$(el).find("a").addClass(item.cascade).data("bag", item.bag);
@@ -194,7 +192,6 @@ var renderEntity = function(type, name, container) {
 // items is the collection's data array
 // options.title is used as heading and also as element ID (lowercased)
 // options.sortAttr is the attribute by which items are to be sorted
-// options.mapping is a function to determine list items from the supplied data
 // options.callback is a function applied to each item's DOM element
 var listCollection = function(data, options) {
 	var sortAttr = options.sortAttr !== undefined ? options.sortAttr : null;
@@ -203,7 +200,11 @@ var listCollection = function(data, options) {
 		var y = sortAttr !== null ? b[sortAttr].toLowerCase() : b.toLowerCase();
 		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	}); // XXX: does not take into account special items ("(none)", "(all)")
-	var items = options.mapping ? $.map(data, options.mapping) : data; // XXX: mapping == sortAttr
+	if(sortAttr !== null) {
+		var items = $.map(data, function(item, i) { return item[sortAttr]; });
+	} else {
+		items = data;
+	}
 
 	var ctx = {
 		id: options.title.toLowerCase() || "", // XXX: title inappropriate?
