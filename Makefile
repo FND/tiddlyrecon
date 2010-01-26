@@ -1,6 +1,3 @@
-# Simple Makefile for some common tasks. This will get 
-# fleshed out with time to make things easier on developer
-# and tester types.
 .PHONY: dist release
 
 clean:
@@ -27,7 +24,7 @@ remotes: jslib
 dist: remotes
 	python setup.py sdist
 
-release: clean pypi
+release: clean remotes pypi
 
 pypi:
 	python setup.py sdist upload
