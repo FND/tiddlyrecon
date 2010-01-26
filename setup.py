@@ -2,13 +2,12 @@ AUTHOR = "FND"
 AUTHOR_EMAIL = "FNDo@gmx.net"
 NAME = "tiddlywebplugins.console"
 DESCRIPTION = "TiddlyWeb explorer"
+VERSION = "0.2.1" # N.B.: duplicate of tiddlywebplugins.console.__init__
 
 
 import os
 
 from setuptools import setup, find_packages
-
-from tiddlywebplugins.console import __version__ as VERSION
 
 
 setup(
