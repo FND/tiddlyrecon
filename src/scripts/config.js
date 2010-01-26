@@ -1,1 +1,1 @@
-TiddlyWeb.host = "http://tiddlyweb.peermore.com/wiki"; // XXX: use of class attribute hacky
+TiddlyWeb.host = document.location.pathname.split("/console")[0];
