@@ -26,6 +26,7 @@ setup(
 		"setuptools",
 		"tiddlyweb",
 		"tiddlywebplugins.instancer>=0.7.2",
+		"tiddlywebplugins.twimport>=0.5",
 		"tiddlywebplugins.status"
 	],
 	include_package_data = True,
