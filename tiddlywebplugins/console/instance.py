@@ -9,7 +9,7 @@ def _store_contents(sources):
 	store_contents = {}
 	pattern = re.compile(u"^src\/")
 	for bag, uris in sources.items():
-		prefix = "file:%s" % os.path.join("src", "tiddlers", bag, "")
+		prefix = "%s" % os.path.join("src", "tiddlers", bag, "")
 		store_contents[bag] = [pattern.sub(prefix, uri) for uri in uris]
 	return store_contents
 

@@ -10,7 +10,9 @@ import os
 import mangler
 
 from tiddlyweb.util import read_utf8_file, write_utf8_file, std_error_message
-from tiddlywebplugins.instancer.util import cache_tiddlers, _expand_recipe
+from tiddlywebplugins.instancer.util import cache_tiddlers
+from tiddlywebplugins.twimport import recipe_to_urls
+
 from tiddlywebplugins.console.instance import sources as store_sources
 
 
@@ -29,7 +31,7 @@ def generate_tiddler_files():
 		sources[bag] = []
 		for uri in uris:
 			if uri.endswith(".recipe"):
-				urls = _expand_recipe(uri)
+				urls = recipe_to_urls(uri)
 				sources[bag].extend(urls)
 			else:
 				sources[bag].append(uri)
@@ -57,6 +59,8 @@ def generate_tiddler_files():
 			elif uri.endswith(".html"):
 				type = "html"
 			content_type = "type: text/%s" % type
+			if uri.startswith("file:///"): # XXX: hack; use twimport's _get_url_handle(uri)!?
+				uri = uri[7:]
 			tiddler = "%s\n\n%s" % (content_type, read_utf8_file(uri))
 
 			filepath = os.path.join(bag_path, os.path.basename(uri))
