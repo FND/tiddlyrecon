@@ -40,7 +40,7 @@ var populateRecipes = function(container, data, status, error) {
 var loadRecipe = function(ev) {
 	var recipe_node = $(this);
 	setActive(recipe_node);
-	var recipe_name = recipe_node.text().trim();
+	var recipe_name = $.trim(recipe_node.text());
 	recipe_name = recipe_name == "(none)" ? null : recipe_name; // XXX: hacky?
 	notify("loading recipe", recipe_name);
 
@@ -73,7 +73,7 @@ var populateBags = function(container, data, status, error) {
 		sortAttr: 0,
 		callback: function(i, el, items) {
 			$(el).find("a").data("filter", items[i][1]).click(loadBag);
-		},
+		}
 	};
 	listCollection(data.recipe, options).
 		find("li:first").addClass("virtual").end().
@@ -86,7 +86,7 @@ var populateBags = function(container, data, status, error) {
 var loadBag = function(ev) {
 	var bag_node = $(this);
 	setActive(bag_node);
-	var bag_name = bag_node.text().trim();
+	var bag_name = $.trim(bag_node.text());
 	bag_name = bag_name == "(all)" ? null : bag_name; // XXX: hacky?
 	notify("loading bag", bag_name);
 
@@ -154,7 +154,7 @@ var populateTiddlers = function(container, data, status, error) {
 var loadTiddler = function(ev) {
 	var tiddler_node = $(this);
 	setActive(tiddler_node);
-	var title = tiddler_node.text().trim();
+	var title = $.trim(tiddler_node.text());
 	var bag = tiddler_node.data("bag");
 	notify("loading tiddler", title, bag);
 

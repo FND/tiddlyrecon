@@ -59,7 +59,7 @@ def generate_tiddler_files():
 			elif uri.endswith(".html"):
 				type = "html"
 			content_type = "type: text/%s" % type
-			if uri.startswith("file:///"): # XXX: hack; use twimport's _get_url_handle(uri)!?
+			if uri.startswith("file://"): # XXX: hack; use twimport's _get_url_handle!?
 				uri = uri[7:]
 			tiddler = "%s\n\n%s" % (content_type, read_utf8_file(uri))
 
