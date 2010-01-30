@@ -10,7 +10,7 @@ clean:
 
 jslib:
 	curl -o "src/scripts/jquery.min.js" \
-		"http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"
+		"http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"
 	curl -o "src/scripts/jquery-json.min.js" \
 		"http://jquery-json.googlecode.com/files/jquery.json-2.2.min.js"
 	curl -o "src/scripts/chrjs.js" \
