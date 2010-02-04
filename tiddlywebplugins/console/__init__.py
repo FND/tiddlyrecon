@@ -6,7 +6,7 @@ APP_BAG = "console"
 def init(config):
 	from tiddlywebplugins.utils import map_to_tiddler
 
-	if config.get("selector"): # system plugin
+	if 'selector' in config: # system plugin
 		config["selector"].add("/console", GET=redirect) # XXX: temporary workaround (see below)
 		config["selector"].add("/console/", GET=get_root) # XXX: trailing slash required for relative paths!? -- TODO: use HTML BASE tag
 		map_to_tiddler(config["selector"],
