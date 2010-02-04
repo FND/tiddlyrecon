@@ -4,7 +4,7 @@ import re
 
 def _store_contents(sources):
 	"""
-	determine tiddler URIs from source files' paths
+	determines tiddler URIs from source files' paths
 	"""
 	store_contents = {}
 	pattern = re.compile(u"^src\/")
