@@ -1,0 +1,18 @@
+TiddlyRecon
+TiddlyWeb data explorer
+
+
+Configuration
+
+The host URI is defined in scripts/config.js.
+
+
+Dependencies
+
+TiddlyRecon requires jQuery, chrjs and some jQuery utility methods:
+    http://jquery.com
+    http://github.com/tiddlyweb/chrjs
+    http://github.com/FND/jquery/raw/master/util.js
+
+In addition, YUICompressor is used for minification (optional):
+    http://yuilibrary.com/projects/yuicompressor

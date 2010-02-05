@@ -1,18 +1,8 @@
-TiddlyRecon
-TiddlyWeb data explorer
+TiddlyRecon is a TiddlyWeb data explorer, which is packaged as
+tiddlywebplugins.console.
 
+code repository:
+http://www.github.com/FND/tiddlyrecon
 
-Configuration
-
-The host URI is defined in scripts/config.js.
-
-
-Dependencies
-
-TiddlyRecon requires jQuery, chrjs and some jQuery utility methods:
-    http://jquery.com
-    http://github.com/tiddlyweb/chrjs
-    http://github.com/FND/jquery/raw/master/util.js
-
-In addition, YUICompressor is used for minification (optional):
-    http://yuilibrary.com/projects/yuicompressor
+The self-contained web application resides in the the src directory, augmented
+by resources used for packaging as a TiddlyWeb vertical.
