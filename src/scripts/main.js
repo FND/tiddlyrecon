@@ -54,7 +54,7 @@ var loadRecipe = function(ev) {
 	} else {
 		var _callback = function(data, status, error) {
 			var recipe = $.map(data, function(item, i) {
-				return [[item, ""]]; // nested array to prevent flattening
+				return [[item, ""]]; // nested array prevents flattening
 			});
 			data = { recipe: recipe };
 			callback.apply(this, arguments);
