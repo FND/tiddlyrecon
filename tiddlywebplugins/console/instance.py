@@ -7,9 +7,9 @@ def _store_contents(sources):
 	determines tiddler URIs from source files' paths
 	"""
 	store_contents = {}
-	pattern = re.compile(u"^src\/")
+	pattern = re.compile(r"^src/")
 	for bag, uris in sources.items():
-		prefix = "%s" % os.path.join("src", "tiddlers", bag, "")
+		prefix = "%s/" % "/".join(["src", "tiddlers", bag])
 		store_contents[bag] = [pattern.sub(prefix, uri) for uri in uris]
 	return store_contents
 

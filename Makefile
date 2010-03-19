@@ -1,4 +1,4 @@
-.PHONY: dist release
+.PHONY: clean jslib remotes dist release pypi
 
 clean:
 	find . -name "*.pyc" | xargs rm || true
@@ -21,10 +21,10 @@ jslib:
 remotes: jslib
 	./cacher
 
-dist: remotes
+dist: clean remotes
 	python setup.py sdist
 
-release: clean remotes pypi
+release: dist pypi
 
 pypi:
 	python setup.py sdist upload

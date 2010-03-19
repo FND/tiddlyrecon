@@ -2,7 +2,7 @@ AUTHOR = "FND"
 AUTHOR_EMAIL = "FNDo@gmx.net"
 NAME = "tiddlywebplugins.console"
 DESCRIPTION = "TiddlyWeb explorer"
-VERSION = "0.2.4" # N.B.: duplicate of tiddlywebplugins.console.__init__
+VERSION = "0.2.5" # N.B.: duplicate of tiddlywebplugins.console.__init__
 
 
 import os
