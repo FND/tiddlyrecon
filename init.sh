@@ -2,7 +2,7 @@
 
 set -e
 
-if [ ! -d src ]; then
+if [ ! -f "src/README" ]; then
 	git submodule init
 fi
 git submodule update
