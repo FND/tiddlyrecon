@@ -1,6 +1,6 @@
+*.pyc
 src/scripts/jquery.min.js
 src/scripts/jquery-json.min.js
 src/scripts/chrjs.js
 src/scripts/util.js
 src/bld/yuicompressor*.jar
-*.pyc

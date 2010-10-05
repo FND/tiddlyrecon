@@ -20,7 +20,7 @@ instance_config = {
 
 sources = {
 	"console": [
-		"src/index.recipe"
+		"index.recipe"
 	]
 }
 
