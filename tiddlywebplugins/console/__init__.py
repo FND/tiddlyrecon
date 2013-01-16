@@ -1,3 +1,13 @@
+"""
+Handlers to load the console when requested.
+"""
+
+from httpexceptor import HTTP302
+
+from tiddlyweb.web.handler.tiddler import get as get_tiddler
+from tiddlyweb.web.util import server_base_url
+
+
 __version__ = "0.2.5"
 
 APP_BAG = "console"
@@ -15,15 +25,10 @@ def init(config):
 
 
 def get_root(environ, start_response): # XXX: "root" inappropriate!?
-	from tiddlyweb.web.handler.tiddler import get as get_tiddler
-
 	environ["wsgiorg.routing_args"][1]["bag_name"] = APP_BAG
 	environ["wsgiorg.routing_args"][1]["tiddler_name"] = "index.html"
 	return get_tiddler(environ, start_response)
 
 
 def redirect(environ, start_response):
-	from tiddlyweb.web.http import HTTP302
-	from tiddlyweb.web.util import server_base_url
-
 	raise HTTP302(server_base_url(environ) + "/console/")
