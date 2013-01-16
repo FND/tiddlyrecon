@@ -2,7 +2,7 @@ AUTHOR = "FND"
 AUTHOR_EMAIL = "FNDo@gmx.net"
 NAME = "tiddlywebplugins.console"
 DESCRIPTION = "TiddlyWeb explorer"
-VERSION = "0.2.5" # N.B.: duplicate of tiddlywebplugins.console.__init__
+VERSION = "0.2.6" # N.B.: duplicate of tiddlywebplugins.console.__init__
 
 
 import os
@@ -27,7 +27,7 @@ setup(
 		"tiddlywebplugins.instancer>=0.7.2",
 		"tiddlywebplugins.twimport>=0.5",
 		"tiddlywebplugins.status",
-		"httpexeteptor"
+		"httpexceptor"
 	],
 	include_package_data = True,
 	zip_safe = False
