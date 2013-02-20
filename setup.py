@@ -20,12 +20,13 @@ setup(
 	url = "http://pypi.python.org/pypi/%s" % NAME,
 	packages = find_packages(exclude="test"),
 	author_email = AUTHOR_EMAIL,
+        scripts = ['twconsole'],
 	platforms = "Posix; MacOS X; Windows",
 	install_requires = [
 		"setuptools",
 		"tiddlyweb",
-		"tiddlywebplugins.instancer>=0.7.2",
-		"tiddlywebplugins.twimport>=0.5",
+                "tiddlywebplugins.pkgstore",
+                'tiddlywebplugins.imaker',
 		"tiddlywebplugins.status",
 		"httpexceptor"
 	],

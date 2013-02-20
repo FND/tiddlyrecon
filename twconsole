@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+
+"""
+TiddlyWeb Console Instantiation
+
+Usually not needed (as console is generally included in
+some other package), but here in case someone wants to spin
+up a console only instance.
+
+"""
+
+import sys
+
+try:
+    import mangler
+except ImportError:
+    pass
+
+from tiddlyweb.util import std_error_message
+from tiddlywebplugins.imaker import spawn
+
+from tiddlywebplugins.console import instance as instance_module
+from tiddlywebplugins.console.config import config as init_config
+
+
+def main(args):
+    args = [unicode(arg, 'UTF-8') for arg in args]
+    try:
+        instance_path = args[1]
+    except IndexError:
+        std_error_message('ERROR: missing instance directory parameter')
+        return False
+    spawn(instance_path, init_config, instance_module)
+    return True
+
+
+if __name__ == '__main__':
+    status = not main(sys.argv)
+    sys.exit(status)
