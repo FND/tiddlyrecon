@@ -1,4 +1,4 @@
-PACKAGE_NAME = "tiddlywebplugins.console"
+PACKAGE_NAME = 'tiddlywebplugins.console'
 
 
 config = {
