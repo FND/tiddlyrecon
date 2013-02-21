@@ -8,7 +8,7 @@ from tiddlyweb.web.handler.tiddler import get as get_tiddler
 from tiddlyweb.web.util import server_base_url
 
 
-__version__ = '0.2.6'
+__version__ = '0.3.0'
 
 APP_BAG = 'console'
 
