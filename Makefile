@@ -9,17 +9,17 @@ clean:
 	rm -r tiddlywebplugins/console/resources || true
 
 jslib:
-	curl -o "src/scripts/jquery.min.js" \
-		"http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"
-	curl -o "src/scripts/jquery-json.min.js" \
-		"http://jquery-json.googlecode.com/files/jquery.json-2.2.min.js"
-	curl -o "src/scripts/chrjs.js" \
-		"http://github.com/tiddlyweb/chrjs/raw/v0.2.1/main.js"
-	curl -o "src/scripts/util.js" \
-		"http://github.com/FND/jquery/raw/master/util.js"
+	curl -o "src/scripts/jquery.min.js.js" \
+	    	"http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"
+	curl -o "src/scripts/jquery-json.min.js.js" \
+	        "https://jquery-json.googlecode.com/files/jquery.json-2.4.min.js"
+	curl -o "src/scripts/chrjs.js.js" \
+	        "https://raw.github.com/tiddlyweb/chrjs/v0.2.1/main.js"
+	curl -o "src/scripts/util.js.js" \
+	        "https://raw.github.com/FND/jquery/master/util.js"
 
 remotes: jslib
-	./cacher
+	twibuilder tiddlywebplugins.console
 
 dist: clean remotes
 	python setup.py sdist
